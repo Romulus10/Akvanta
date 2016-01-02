@@ -16,13 +16,13 @@
 		var Form = document.forms[0];
 		var name = Form.elements[0].value;
 		document.cookie="name=" + name;
-		document.write('<!DOCYTPE html><html manifest="cache.manifest"><head><meta name="viewport" content="user-scalable=no,width=device-width,initial-scale=1.0,maximum-scale=1.0"/><meta name="apple-mobile-web-app-capable" content="yes"/><meta name="apple-mobile-web-app-status-bar-style" content="black"/><link rel="stylesheet" href="app.css" type="text/css" media="screen,mobile" title="main" charset="utf-8"/><link rel="apple-touch-icon" href="app.png"/><title>Akvanta</title></head><body><script src="app.js"></script></body></html>');
+		var myWindow = window.open("game.html", "_self");
 	}
 </script>
 <form>
 	What is your name?
 	<input type="text" name="name">
-	<button value="Submit" onclick="getName()">
+	<input type="submit" value="Submit" onclick="getName()">
 </form>
 </body>
 </html>
