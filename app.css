@@ -18,6 +18,11 @@ th {
     text-align: left;
 }
 button {
-	height: 71px;
-	width: 71px;
+	height: 65px;
+	width: 65px;
+}
+textarea{
+  width: 320px;
+  height: 70px;
+  overflow-y: scroll;
 }

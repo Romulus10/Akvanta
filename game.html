@@ -2,75 +2,76 @@
 <html manifest="cache.manifest">
 
 <head>
-	<meta name="viewport" content="user-scalable=no,width=device-width,initial-scale=1.0,maximum-scale=1.0" />
-	<meta name="apple-mobile-web-app-capable" content="yes" />
-	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
-	<link rel="stylesheet" href="app.css" type="text/css" media="screen,mobile" title="main" charset="utf-8" />
-	<link rel="apple-touch-icon" href="app.png" />
-	<title>Akvanta</title>
+    <meta name="viewport" content="user-scalable=no,width=device-width,initial-scale=1.0,maximum-scale=1.0" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <link rel="stylesheet" href="app.css" type="text/css" media="screen,mobile" title="main" charset="utf-8" />
+    <link rel="apple-touch-icon" href="app.png" />
+    <title>Akvanta</title>
+    <script src="app.js"></script>
 </head>
 
 <body>
-	<script src="app.js"></script>
-	<p id='console'>Welcome to Akvanta.</p>
-	<table>
-	<tr>
-	<th id='map'></th>
-	<th id='stats'></th>
-	</tr>
-	</table>
-	<tr>
-	<th>
-	<button id='inventory'></button>
-	</th>
-	<th>
-	<button></button>
-	</th>
-	<th>
-	<button id='up'></button>
-	</th>
-	<th>
-	<button></button>
-	</th>
-	<th>
-	<button></button>
-	</th>
-	</tr>
-	<tr>
-	<th>
-	<button></button>
-	</th>
-	<th>
-	<button id='left'></button>
-	</th>
-	<th>
-	<button id='interact'></button>
-	</th>
-	<th>
-	<button id='right'></button>
-	</th>
-	<th>
-	<button>
-	</button>
-	</th>
-	</tr>
-	<tr>
-	<th>
-	<button></button>
-	</th>
-	<th>
-	<button></button>
-	</th>
-	<th>
-	<button id='down'></button>
-	</th>
-	<th>
-	<button></button>
-	</th>
-	<th>
-	<button></button>
-	</th>
-	</tr>
+    <textarea id='console'></textarea>
+    <table>
+        <tr>
+            <th id='map'>
+            </th>
+            <th id='stats'>
+            </th>
+        </tr>
+    </table>
+    <tr>
+        <th>
+            <button id='inventory'></button>
+        </th>
+        <th>
+            <button></button>
+        </th>
+        <th>
+            <button id='up' onclick="moveUp()"><img src='uparrow.png' width=49 height=59></button>
+        </th>
+        <th>
+            <button></button>
+        </th>
+        <th>
+            <button></button>
+        </th>
+    </tr>
+    <tr>
+        <th>
+            <button></button>
+        </th>
+        <th>
+            <button id='left' onclick="moveLeft()"><img src='leftarrow.png' width=49 height=59></button>
+        </th>
+        <th>
+            <button id='interact'></button>
+        </th>
+        <th>
+            <button id='right' onclick="moveRight()"><img src='rightarrow.png' width=49 height=59></button>
+        </th>
+        <th>
+            <button></button>
+        </th>
+    </tr>
+    <tr>
+        <th>
+            <button></button>
+        </th>
+        <th>
+            <button></button>
+        </th>
+        <th>
+            <button id='down' onclick="moveDown()"><img src='downarrow.png' width=49 height=59></button>
+        </th>
+        <th>
+            <button></button>
+        </th>
+        <th>
+            <button></button>
+        </th>
+    </tr>
 </body>
 
 </html>
