@@ -5,6 +5,7 @@ console.log(nex);
 var str = url.substring(nex+1);
 console.log(str);
 console.log("Started a new game as " + str);
+document.write("<p id='console'>Welcome to Akvanta.</p><table><tr><th id='map'></th><th id='stats'></th></tr></table><tr><th><button id='inventory'></button></th><th><button></button></th><th><button id='up'></button></th><th><button></button></th><th><button></button></th></tr><tr><th><button></button></th><th><button id='left'></button></th><th><button id='interact'></button></th><th><button id='right'></button></th><th><button></button></th></tr><tr><th><button></button></th><th><button></button></th><th><button id='down'></button></th><th><button></button></th><th><button></button></th></tr>");
 var player = {
 	name:str,
 	health:10,
