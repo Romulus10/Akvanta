@@ -7,3 +7,5 @@ console.log(str);
 var name = str;
 console.log("Started a new game as ") + name;
 document.write("<h1>Akvanta</h1><p id='map'></p>");
+var player = {
+}
