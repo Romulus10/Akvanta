@@ -8,16 +8,17 @@
 	<link rel="stylesheet" href="app.css" type="text/css" media="screen,mobile" title="main" charset="utf-8" />
 	<link rel="apple-touch-icon" href="app.png" />
 	<title>Akvanta</title>
+	<script>
+	function getName(){
+		var Form = document.forms[0];
+		var name = Form.elements[0].value;
+		console.log(name);
+		self.location = "game.html?name=" + name;
+	}
+	</script>
 </head>
 
 <body>
-	<script>
-		function getName(){
-	var Form = document.forms[0];
-	var name = Form.elements[0].value;
-	window.location = ("game.html?name=" + name);
-}
-	</script>
 	<h1>Akvanta</h1>
 	<h2>Welcome, new adventurer.</h2>
 	<form method="get">
@@ -25,9 +26,8 @@
 		<br>
 		<input type="text" name="name">
 		<br>
-		<input type="submit" value="Submit" onclick="getName()">
-		<br>
 	</form>
+	<button onclick="getName()">Submit</button>
 </body>
 
 </html>
