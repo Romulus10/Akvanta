@@ -16,9 +16,8 @@
 	var Form = document.forms[0];
 	var name = Form.elements[0].value;
 	document.cookie="name=" + name;
-	window.open("game.html?name=" + name);
+	window.location = ("game.html?name=" + name);
 }
-
 	</script>
 	<h1>Akvanta</h1>
 	<h2>Welcome, new adventurer.</h2>
