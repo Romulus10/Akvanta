@@ -5,3 +5,5 @@ console.log(nex);
 var str = url.substring(nex+1);
 console.log(str);
 var name = str;
+console.log("Started a new game as ") + name;
+document.write("<h1>Akvanta</h1><div><p id='map'></p></div>");
