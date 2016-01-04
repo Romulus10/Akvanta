@@ -26,8 +26,8 @@ function createPlayer(str) {
         intellect: 2,
         level: 1,
         experience: 0,
-        x: 0,
-        y: 0
+        x: 1,
+        y: 1
     };
 }
 
@@ -47,6 +47,7 @@ window.onload = function () {
 
 function drawMap(){
     console.log("Drawing map...");
+    moveCheck();
     var mapString = "";
     for (var x = 0; x < 15; x++){
         for (var y = 0; y < 24; y++){
@@ -80,23 +81,35 @@ function updateConsole(text){
 // Button functions.
 
 function moveUp(){
-    player.y--;
+    map[player.x][player.y] = "x";
+    player.x--;
     console.log("Player is now at " + player.x + "," + player.y);
+    moveCheck();
+    drawMap();
 }
 
 function moveDown(){
-    player.y++;
+    map[player.x][player.y] = "x";
+    player.x++;
     console.log("Player is now at " + player.x + "," + player.y);
+    moveCheck();
+    drawMap();
 }
 
 function moveLeft(){
-    player.x--;
+    map[player.x][player.y] = "x";
+    player.y--;
     console.log("Player is now at " + player.x + "," + player.y);
+    moveCheck();
+    drawMap();
 }
 
 function moveRight(){
-    player.x++;
+    map[player.x][player.y] = "x";
+    player.y++;
     console.log("Player is now at " + player.x + "," + player.y);
+    moveCheck();
+    drawMap();
 }
 
 // Logic functions.
