@@ -10,16 +10,16 @@ body {
 	background:#000;
 }
 td {
-    padding: 15px;
+    padding: 5px;
     text-align: left;
 }
 th {
-	padding: 15px;
+	padding: 5px;
     text-align: left;
 }
 button {
-	height: 65px;
-	width: 65px;
+	height: auto;
+	width: auto;
 }
 textarea{
   width: 320px;
