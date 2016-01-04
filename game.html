@@ -27,7 +27,7 @@
             <button id='inventory'></button>
         </th>
         <th>
-            <button></button>
+            <button id='help' onclick="self.location = 'help.html'">Help!</button>
         </th>
         <th>
             <button id='up' onclick="moveUp()"><img src='uparrow.png' width=30 height=30></button>
@@ -36,7 +36,7 @@
             <button></button>
         </th>
         <th>
-            <button id='melee'><img src="sword.png" width=30 height=30></button>
+            <button id='melee' onclick="attack()"><img src="sword.png" width=30 height=30></button>
         </th>
     </tr>
     <tr>
@@ -47,7 +47,7 @@
             <button id='left' onclick="moveLeft()"><img src='leftarrow.png' width=30 height=30></button>
         </th>
         <th>
-            <button id='interact'></button>
+            <button id='interact' onclick="interact()"></button>
         </th>
         <th>
             <button id='right' onclick="moveRight()"><img src='rightarrow.png' width=30 height=30></button>

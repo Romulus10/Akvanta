@@ -18,8 +18,8 @@ th {
     text-align: left;
 }
 button {
-	height: auto;
-	width: auto;
+	height: 50px;
+	width: 50px;
 }
 textarea{
   width: 320px;
