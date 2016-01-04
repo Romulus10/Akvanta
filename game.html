@@ -21,21 +21,22 @@
             </th>
         </tr>
     </table>
+    <table>
     <tr>
         <th>
             <button id='inventory'></button>
         </th>
         <th>
-            <button></button>
+            <button id='help' onclick="self.location = 'help.html'">Help!</button>
         </th>
         <th>
-            <button id='up' onclick="moveUp()"><img src='uparrow.png' width=49 height=59></button>
-        </th>
-        <th>
-            <button></button>
+            <button id='up' onclick="moveUp()"><img src='uparrow.png' width=30 height=30></button>
         </th>
         <th>
             <button></button>
+        </th>
+        <th>
+            <button id='melee' onclick="attack()"><img src="sword.png" width=30 height=30></button>
         </th>
     </tr>
     <tr>
@@ -43,16 +44,16 @@
             <button></button>
         </th>
         <th>
-            <button id='left' onclick="moveLeft()"><img src='leftarrow.png' width=49 height=59></button>
+            <button id='left' onclick="moveLeft()"><img src='leftarrow.png' width=30 height=30></button>
         </th>
         <th>
-            <button id='interact'></button>
+            <button id='interact' onclick="interact()"></button>
         </th>
         <th>
-            <button id='right' onclick="moveRight()"><img src='rightarrow.png' width=49 height=59></button>
+            <button id='right' onclick="moveRight()"><img src='rightarrow.png' width=30 height=30></button>
         </th>
         <th>
-            <button></button>
+            <button id='magic'></button>
         </th>
     </tr>
     <tr>
@@ -63,15 +64,16 @@
             <button></button>
         </th>
         <th>
-            <button id='down' onclick="moveDown()"><img src='downarrow.png' width=49 height=59></button>
+            <button id='down' onclick="moveDown()"><img src='downarrow.png' width=30 height=30></button>
         </th>
         <th>
             <button></button>
         </th>
         <th>
-            <button></button>
+            <button id='heal' onclick="heal()"> <img src="heal.png" width=30 height=30></button>
         </th>
     </tr>
+    </table>
 </body>
 
 </html>
