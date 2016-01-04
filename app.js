@@ -1,9 +1,9 @@
 var player = { name: "", health: 0, energy: 0, strength: 0, defense: 0, intellect: 0, level: 0, experience: 0, x: 0, y: 0 };
 var enemyOne = { health: 0, strength: 10, defense: 0 };
-var enemyTwo = { health: 0, strength: 20, defense: 5 };
-var enemyThree = { health: 0, strength: 30, defense: 10 };
-var enemyFour = { health: 0, strength: 40, defense: 15 };
-var enemyFive = { health: 0, strength: 50, defense: 20 };
+var enemyTwo = { health: 0, strength: 20, defense: 3 };
+var enemyThree = { health: 0, strength: 30, defense: 5 };
+var enemyFour = { health: 0, strength: 40, defense: 7 };
+var enemyFive = { health: 0, strength: 50, defense: 10 };
 var mapsChecked = 0;
 
 var map = [["0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
