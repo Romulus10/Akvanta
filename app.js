@@ -1,9 +1,9 @@
-var player = { name: "", health: 0, energy: 0, strength: 0, defense: 0, intellect: 0, level: 0, experience: 0, x: 0, y: 0 };
-var enemyOne = { health: 0, strength: 10, defense: 0 };
-var enemyTwo = { health: 0, strength: 20, defense: 3 };
-var enemyThree = { health: 0, strength: 30, defense: 5 };
-var enemyFour = { health: 0, strength: 40, defense: 7 };
-var enemyFive = { health: 0, strength: 50, defense: 10 };
+var player = {name: "", health: 10, energy: 0, strength: 3, intellect: 1, level: 1, experience: 0, x: 1, y: 1};
+var enemyOne = { health: 0, strength: 1 };
+var enemyTwo = { health: 0, strength: 2 };
+var enemyThree = { health: 0, strength: 3 };
+var enemyFour = { health: 0, strength: 4 };
+var enemyFive = { health: 0, strength: 5 };
 var mapsChecked = 0;
 
 var map = [["0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
@@ -78,6 +78,7 @@ function startAMap() {
     var medCount = 0;
     var nullSpace = 0;
     var immediateRiskOfDeath = 0;
+    var damageOnLoad = 0;
     for (var x = 0; x < 15; x++) {
         for (var y = 0; y < 24; y++) {
             if (underMap[x][y] == "5") {
@@ -116,6 +117,13 @@ function startAMap() {
             }
         }
     }
+    for (var x = 0; x < 0; x++){
+        for (var y = 0; y < 0; y++){
+            if (underMap[x][y] == "5" || underMap[x][y] == "4" || underMap[x][y] == "3" || underMap[x][y] == "2" || underMap[x][y] == "1"){
+                damageOnLoad = damageOnLoad + parseInt(underMap[x][y]);
+            }
+        }
+    }
     if (bossCount >= 4 || bossCount <= 1) {
         viability -= 20;
     }
@@ -131,7 +139,10 @@ function startAMap() {
     if (immediateRiskOfDeath > 7) {
         viability -= 20;
     }
-    if (viability < 60) {
+    if (damageOnLoad > 5){
+        viability -= 10;
+    }
+    if (viability < 65) {
         console.log("Map not viable.");
         console.log(viability + "%");
         startAMap();
@@ -147,11 +158,10 @@ function createPlayer(str) {
     console.log("Player initializing.");
     player = {
         name: str,
-        health: 100,
+        health: 10,
         energy: 0,
-        strength: 10,
-        defense: 5,
-        intellect: 10,
+        strength: 3,
+        intellect: 1,
         level: 1,
         experience: 0,
         x: 1,
@@ -173,7 +183,6 @@ window.onload = function () {
     startAMap();
     createPlayer(str);
     drawMap();
-    writeStats();
     turnCheck();
     drawMap();
 }
@@ -256,6 +265,7 @@ function moveRight() {
 }
 
 function turnCheck() {
+    console.log("Checking results of last action.");
     var x = player.x;
     var y = player.y;
     if (x <= 0) {
@@ -362,7 +372,6 @@ function turnCheck() {
             updateConsole("Your health is low!");
         }
         enemiesCheck();
-        writeStats();
     }
     catch (TypeError) {
         console.log("On an edge, should still reveal spots on the board.");
@@ -386,46 +395,48 @@ function attack() {
     var x = player.x;
     var y = player.y;
     console.log("Attacking.");
+    console.log(enemyOne);
+    console.log(enemyOne.health);
     if (map[x - 1][y - 1] == "1") {
         console.log(enemyOne.defense);
         console.log(player.strength);
-        if (enemyOne.defense < player.strength) enemyOne.health = enemyOne.health - (player.strength - enemyOne.defense);
+        enemyOne.health = enemyOne.health - player.strength;
         updateConsole("Hit an enemy at " + x + "," + y);
     }
     if (map[x][y - 1] == "1") {
         console.log(enemyOne.defense);
         console.log(player.strength);
-        if (enemyOne.defense < player.strength) enemyOne.health = enemyOne.health - (player.strength - enemyOne.defense);
+        enemyOne.health = enemyOne.health - player.strength;
         updateConsole("Hit an enemy at " + x + "," + y);
     }
     if (map[x + 1][y - 1] == "1") {
         console.log(enemyOne.defense);
         console.log(player.strength);
-        if (enemyOne.defense < player.strength) enemyOne.health = enemyOne.health - (player.strength - enemyOne.defense);
+        enemyOne.health = enemyOne.health - player.strength;
         updateConsole("Hit an enemy at " + x + "," + y);
     }
     if (map[x - 1][y] == "1") {
         console.log(enemyOne.defense);
         console.log(player.strength);
-        if (enemyOne.defense < player.strength) enemyOne.health = enemyOne.health - (player.strength - enemyOne.defense);
+        enemyOne.health = enemyOne.health - player.strength;
         updateConsole("Hit an enemy at " + x + "," + y);
     }
     if (map[x + 1][y] == "1") {
         console.log(enemyOne.defense);
         console.log(player.strength);
-        if (enemyOne.defense < player.strength) enemyOne.health = enemyOne.health - (player.strength - enemyOne.defense);
+        enemyOne.health = enemyOne.health - player.strength;
         updateConsole("Hit an enemy at " + x + "," + y);
     }
     if (map[x - 1][y + 1] == "1") {
         console.log(enemyOne.defense);
         console.log(player.strength);
-        if (enemyOne.defense < player.strength) enemyOne.health = enemyOne.health - (player.strength - enemyOne.defense);
+        enemyOne.health = enemyOne.health - player.strength;
         updateConsole("Hit an enemy at " + x + "," + y);
     }
     if (map[x][y + 1] == "1") {
         console.log(enemyOne.defense);
         console.log(player.strength);
-        if (enemyOne.defense < player.strength) enemyOne.health = enemyOne.health - (player.strength - enemyOne.defense);
+        enemyOne.health = enemyOne.health - player.strength;
         updateConsole("Hit an enemy at " + x + "," + y);
     }
     if (map[x + 1][y + 1] == "1") {
@@ -433,143 +444,146 @@ function attack() {
         console.log(enemyOne);
         console.log(enemyOne.defense);
         console.log(player.strength);
-        if (enemyOne.defense < player.strength) enemyOne.health = enemyOne.health - (player.strength - enemyOne.defense);
+        enemyOne.health = enemyOne.health - player.strength;
         updateConsole("Hit an enemy at " + x + "," + y);
     }
     if (map[x - 1][y - 1] == "2") {
-        if (enemyTwo.defense < player.strength) enemyTwo.health = enemyTwo.health - (player.strength - enemyTwo.defense);
+        enemyTwo.health = enemyTwo.health - player.strength;
         updateConsole("Hit an enemy at " + x + "," + y);
     }
     if (map[x][y - 1] == "2") {
-        if (enemyTwo.defense < player.strength) enemyTwo.health = enemyTwo.health - (player.strength - enemyTwo.defense);
+        enemyTwo.health = enemyTwo.health - player.strength;
         updateConsole("Hit an enemy at " + x + "," + y);
     }
     if (map[x + 1][y - 1] == "2") {
-        if (enemyTwo.defense < player.strength) enemyTwo.health = enemyTwo.health - (player.strength - enemyTwo.defense);
+        enemyTwo.health = enemyTwo.health - player.strength;
         updateConsole("Hit an enemy at " + x + "," + y);
     }
     if (map[x - 1][y] == "2") {
-        if (player.defense < player.strength) enemyTwo.health = enemyTwo.health - (player.strength - enemyTwo.defense);
+        enemyTwo.health = enemyTwo.health - player.strength;
         updateConsole("Hit an enemy at " + x + "," + y);
     }
     if (map[x + 1][y] == "2") {
-        if (enemyTwo.defense < player.strength) enemyTwo.health = enemyTwo.health - (player.strength - enemyTwo.defense);
+        enemyTwo.health = enemyTwo.health - player.strength;
         updateConsole("Hit an enemy at " + x + "," + y);
     }
     if (map[x - 1][y + 1] == "2") {
-        if (enemyTwo.defense < player.strength) enemyTwo.health = enemyTwo.health - (player.strength - enemyTwo.defense);
+        enemyTwo.health = enemyTwo.health - player.strength;
         updateConsole("Hit an enemy at " + x + "," + y);
     }
     if (map[x][y + 1] == "2") {
-        if (enemyTwo.defense < player.strength) enemyTwo.health = enemyTwo.health - (player.strength - enemyTwo.defense);
+        enemyTwo.health = enemyTwo.health - player.strength;
         updateConsole("Hit an enemy at " + x + "," + y);
     }
     if (map[x + 1][y + 1] == "2") {
-        if (enemyTwo.defense < player.strength) enemyTwo.health = enemyTwo.health - (player.strength - enemyTwo.defense);
+        enemyTwo.health = enemyTwo.health - player.strength;
         updateConsole("Hit an enemy at " + x + "," + y);
     }
     if (map[x - 1][y - 1] == "3") {
-        if (enemyThree.defense < player.strength) enemyThree.health = enemyThree.health - (player.strength - enemyThree.defense);
+        enemyThree.health = enemyThree.health - player.strength;
         updateConsole("Hit an enemy at " + x + "," + y);
     }
     if (map[x][y - 1] == "3") {
-        if (enemyThree.defense < player.strength) enemyThree.health = enemyThree.health - (player.strength - enemyThree.defense);
+        enemyThree.health = enemyThree.health - player.strength;
         updateConsole("Hit an enemy at " + x + "," + y);
     }
     if (map[x + 1][y - 1] == "3") {
         console.log("That one.");
-        if (enemyThree.defense < player.strength) enemyThree.health = enemyThree.health - (player.strength - enemyThree.defense);
+        enemyThree.health = enemyThree.health - player.strength;
         updateConsole("Hit an enemy at " + x + "," + y);
     }
     if (map[x - 1][y] == "3") {
-        if (enemyThree.defense < player.strength) enemyThree.health = enemyThree.health - (player.strength - enemyThree.defense);
+        enemyThree.health = enemyThree.health - player.strength;
         updateConsole("Hit an enemy at " + x + "," + y);
     }
     if (map[x + 1][y] == "3") {
-        if (enemyThree.defense < player.strength) enemyThree.health = enemyThree.health - (player.strength - enemyThree.defense);
+        enemyThree.health = enemyThree.health - player.strength;
         updateConsole("Hit an enemy at " + x + "," + y);
     }
     if (map[x - 1][y + 1] == "3") {
         console.log("This one.");
-        if (enemyThree.defense < player.strength) enemyThree.health = enemyThree.health - (player.strength - enemyThree.defense);
+        enemyThree.health = enemyThree.health - player.strength;
         updateConsole("Hit an enemy at " + x + "," + y);
     }
     if (map[x][y + 1] == "3") {
-        if (enemyThree.defense < player.strength) enemyThree.health = enemyThree.health - (player.strength - enemyThree.defense);
+        enemyThree.health = enemyThree.health - player.strength;
         updateConsole("Hit an enemy at " + x + "," + y);
     }
     if (map[x + 1][y + 1] == "3") {
-        if (enemyThree.defense < player.strength) enemyThree.health = enemyThree.health - (player.strength - enemyThree.defense);
+        enemyThree.health = enemyThree.health - player.strength;
         updateConsole("Hit an enemy at " + x + "," + y);
     }
     if (map[x - 1][y - 1] == "4") {
-        if (enemyFour.defenseh < player.strength) enemyFour.health = enemyFour.health - (player.strength - enemyFour.defense);
+        enemyFour.health = enemyFour.health - player.strength;
         updateConsole("Hit an enemy at " + x + "," + y);
     }
     if (map[x][y - 1] == "4") {
-        if (enemyFour.defense < player.strength) enemyFour.health = enemyFour.health - (player.strength - enemyFour.defense);
+        enemyFour.health = enemyFour.health - player.strength;
         updateConsole("Hit an enemy at " + x + "," + y);
     }
     if (map[x + 1][y - 1] == "4") {
-        if (enemyFour.defense < player.strength) enemyFour.health = enemyFour.health - (player.strength - enemyFour.defense);
+        enemyFour.health = enemyFour.health - player.strength;
         updateConsole("Hit an enemy at " + x + "," + y);
     }
     if (map[x - 1][y] == "4") {
-        if (enemyFour.defense < player.strength) enemyFour.health = enemyFour.health - (player.strength - enemyFour.defense);
+        enemyFour.health = enemyFour.health - player.strength;
         updateConsole("Hit an enemy at " + x + "," + y);
     }
     if (map[x + 1][y] == "4") {
-        if (enemyFour.defense < player.strength) enemyFour.health = enemyFour.health - (player.strength - enemyFour.defense);
+        enemyFour.health = enemyFour.health - player.strength;
         updateConsole("Hit an enemy at " + x + "," + y);
     }
     if (map[x - 1][y + 1] == "4") {
-        if (enemyFour.defense < player.strength) enemyFour.health = enemyFour.health - (player.strength - enemyFour.defense);
+        enemyFour.health = enemyFour.health - player.strength;
         updateConsole("Hit an enemy at " + x + "," + y);
     }
     if (map[x][y + 1] == "4") {
-        if (enemyFour.defense < player.strength) enemyFour.health = enemyFour.health - (player.strength - enemyFour.defense);
+        enemyFour.health = enemyFour.health - player.strength;
         updateConsole("Hit an enemy at " + x + "," + y);
     }
     if (map[x + 1][y + 1] == "4") {
-        if (enemyFour.defense < player.strength) enemyFour.health = enemyFour.health - (player.strength - enemyFour.defense);
+        enemyFour.health = enemyFour.health - player.strength;
         updateConsole("Hit an enemy at " + x + "," + y);
     }
     if (map[x - 1][y - 1] == "5") {
-        if (enemyFive.defense < player.strength) enemyFive.health = enemyFive.health - (player.strength - enemyFive.defense);
+        enemyFive.health = enemyFive.health - player.strength;
         updateConsole("Hit an enemy at " + x + "," + y);
     }
     if (map[x][y - 1] == "5") {
-        if (enemyFive.defense < player.strength) enemyFive.health = enemyFive.health - (player.strength - enemyFive.defense);
+        enemyFive.health = enemyFive.health - player.strength;
         updateConsole("Hit an enemy at " + x + "," + y);
     }
     if (map[x + 1][y - 1] == "5") {
-        if (enemyFive.defense < player.strength) enemyFive.health = enemyFive.health - (player.strength - enemyFive.defense);
+        enemyFive.health = enemyFive.health - player.strength;
         updateConsole("Hit an enemy at " + x + "," + y);
     }
     if (map[x - 1][y] == "5") {
-        if (enemyFive.defense < player.strength) enemyFive.health = enemyFive.health - (player.strength - enemyFive.defense);
+        enemyFive.health = enemyFive.health - player.strength;
         updateConsole("Hit an enemy at " + x + "," + y);
     }
     if (map[x + 1][y] == "5") {
-        if (enemyFive.defense < player.strength) enemyFive.health = enemyFive.health - (player.strength - enemyFive.defense);
+        enemyFive.health = enemyFive.health - player.strength;
         updateConsole("Hit an enemy at " + x + "," + y);
     }
     if (map[x - 1][y + 1] == "5") {
-        if (enemyFive.defense < player.strength) enemyFive.health = enemyFive.health - (player.strength - enemyFive.defense);
+        enemyFive.health = enemyFive.health - player.strength;
         updateConsole("Hit an enemy at " + x + "," + y);
     }
     if (map[x][y + 1] == "5") {
-        if (enemyFive.defense < player.strength) enemyFive.health = enemyFive.health - (player.strength - enemyFive.defense);
+        enemyFive.health = enemyFive.health - player.strength;
         updateConsole("Hit an enemy at " + x + "," + y);
     }
     if (map[x + 1][y + 1] == "5") {
-        if (enemyFive.defense < player.strength) enemyFive.health = enemyFive.health - (player.strength - enemyFive.defense);
+        enemyFive.health = enemyFive.health - player.strength;
         updateConsole("Hit an enemy at " + x + "," + y);
     }
+    console.log("Attack reached the end.");
+    enemiesCheck();
     turnCheck();
 }
 
 function enemiesCheck() {
+    console.log("Checking if anybody died.");
     console.log(enemyOne.health);
     console.log(enemyTwo.health);
     console.log(enemyThree.health);
@@ -609,23 +623,23 @@ function enemiesCheck() {
         console.log("Enemy One attack.");
         console.log(player.defense);
         console.log(enemyOne.strength);
-        if (player.defense < enemyOne.strength) player.health = player.health - (enemyOne.strength - player.defense);
+        player.health = player.health - enemyOne.strength
         updateConsole("Hit by an enemy.");
     }
     if (enemyTwo.health > 0) {
-        if (player.defense < enemyOne.strength) player.health = player.health - (enemyTwo.strength - player.defense);
+        player.health = player.health - enemyTwo.strength;
         updateConsole("Hit by an enemy.");
     }
     if (enemyThree.health > 0) {
-        if (player.defense < enemyOne.strength) player.health = player.health - (enemyThree.strength - player.defense);
+        player.health = player.health - enemyThree.strength;
         updateConsole("Hit by an enemy.");
     }
     if (enemyFour.health > 0) {
-        if (player.defense < enemyOne.strength) player.health = player.health - (enemyFour.strength - player.defense);
+        player.health = player.health - enemyFour.strength;
         updateConsole("Hit by an enemy.");
     }
     if (enemyFive.health > 0) {
-        if (player.defense < enemyOne.strength) player.health = player.health - (enemyFive.strength - player.defense);
+        player.health = player.health - enemyFive.strength;
         updateConsole("Hit by an enemy.");
     }
 }
@@ -645,11 +659,11 @@ function checkLevelUp() {
 
 function findEnemy(x, y) {
     switch (map[x][y]) {
-        case "1": enemyOne.health = enemyOne.health + 20; updateConsole("Encountered an enemy at " + x + "," + y + "!"); break;
-        case "2": enemyTwo.health = enemyTwo.health + 40; updateConsole("Encountered an enemy at " + x + "," + y + "!"); break;
-        case "3": enemyThree.health = enemyThree.health + 60; updateConsole("Encountered an enemy at " + x + "," + y + "!"); break;
-        case "4": enemyFour.health = enemyFour.health + 80; updateConsole("Encountered an enemy at " + x + "," + y + "!"); break;
-        case "5": enemyFive.health = enemyFive.health + 100; updateConsole("Encountered an enemy at " + x + "," + y + "!"); break;
+        case "1": enemyOne.health = enemyOne.health + 2; updateConsole("Encountered an enemy at " + x + "," + y + "!"); break;
+        case "2": enemyTwo.health = enemyTwo.health + 4; updateConsole("Encountered an enemy at " + x + "," + y + "!"); break;
+        case "3": enemyThree.health = enemyThree.health + 6; updateConsole("Encountered an enemy at " + x + "," + y + "!"); break;
+        case "4": enemyFour.health = enemyFour.health + 8; updateConsole("Encountered an enemy at " + x + "," + y + "!"); break;
+        case "5": enemyFive.health = enemyFive.health + 10; updateConsole("Encountered an enemy at " + x + "," + y + "!"); break;
     }
 }
 
@@ -664,6 +678,5 @@ function interact() {
         default: updateConsole("There's nothing here.");
     }
     console.log(player);
-    writeStats();
     turnCheck();
 }
