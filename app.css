@@ -20,6 +20,7 @@ th {
 button {
 	height: 50px;
 	width: 50px;
+	background: white;
 }
 textarea{
   width: 320px;

@@ -117,8 +117,8 @@ function startAMap() {
             }
         }
     }
-    for (var x = 0; x < 0; x++){
-        for (var y = 0; y < 0; y++){
+    for (var x = 0; x < 15; x++){
+        for (var y = 0; y < 24; y++){
             if (underMap[x][y] == "5" || underMap[x][y] == "4" || underMap[x][y] == "3" || underMap[x][y] == "2" || underMap[x][y] == "1"){
                 damageOnLoad = damageOnLoad + parseInt(underMap[x][y]);
             }
@@ -142,6 +142,10 @@ function startAMap() {
     if (damageOnLoad > 5){
         viability -= 10;
     }
+    if (damageOnLoad >= 10){
+        console.log("Player dies immediadely. Map discarded.");
+        viability = 0;
+    }
     if (viability < 65) {
         console.log("Map not viable.");
         console.log(viability + "%");
@@ -150,7 +154,7 @@ function startAMap() {
     else {
         console.log("Map ready.");
         console.log("Viability: " + viability + "%");
-        console.log("Maps checked- " + mapsChecked);
+        console.log("Maps checked: " + mapsChecked);
     }
 }
 
@@ -210,7 +214,7 @@ function drawMap() {
 
 function writeStats() {
     console.log("Stats updating.");
-    document.getElementById("stats").innerHTML = player.name + "<br><br> Level: " + player.level + "<br> Experience: " + player.experience + "<br> Health: " + player.health + "<br> Energy: " + player.energy + "<br> Strength: " + player.strength + "<br> Defense: " + player.defense + "<br> Intellect: " + player.intellect;
+    document.getElementById("stats").innerHTML = player.name + "<br><br> Level: " + player.level + "<br> Experience: " + player.experience + "<br> Health: " + player.health + "<br> Energy: " + player.energy + "<br> Strength: " + player.strength + "<br> Intellect: " + player.intellect;
     console.log(player);
     checkLevelUp();
     checkDead();
@@ -381,7 +385,7 @@ function turnCheck() {
 function heal() {
     if (player.energy > 0) {
         player.energy--;
-        player.health += 50;
+        player.health += 5;
         updateConsole("Used a healing spell.");
         turnCheck();
     }
@@ -621,7 +625,6 @@ function enemiesCheck() {
     console.log("Ended dead check loop.");
     if (enemyOne.health > 0) {
         console.log("Enemy One attack.");
-        console.log(player.defense);
         console.log(enemyOne.strength);
         player.health = player.health - enemyOne.strength
         updateConsole("Hit by an enemy.");
@@ -650,7 +653,6 @@ function checkLevelUp() {
         player.level++;
         player.strength++;
         player.intellect++;
-        player.defense++;
         player.energy = player.level;
         player.health = 10 + (player.level * 5);
         updateConsole("Level up! Your skills have increased and your energy and health have been reset and increased.");
@@ -674,7 +676,7 @@ window.onbeforeunload = function () {
 function interact() {
     console.log("Looking...");
     switch (underMap[player.x][player.y]) {
-        case "^": player.health += 20; updateConsole("Found a healing potion."); break;
+        case "^": player.health += 2; updateConsole("Found a healing potion."); break;
         default: updateConsole("There's nothing here.");
     }
     console.log(player);
