@@ -1,4 +1,4 @@
-var player = {name: "", health: 20, energy: 0, strength: 3, intellect: 1, level: 1, experience: 0, x: 1, y: 1};
+var player = { name: "", health: 20, energy: 0, strength: 3, intellect: 1, level: 1, experience: 0, x: 1, y: 1 };
 var enemyOne = { health: 0, strength: 1 };
 var enemyTwo = { health: 0, strength: 2 };
 var enemyThree = { health: 0, strength: 3 };
@@ -119,9 +119,9 @@ function startAMap() {
             }
         }
     }
-    for (var x = 0; x < 3; x++){
-        for (var y = 0; y < 3; y++){
-            if (underMap[x][y] == "5" || underMap[x][y] == "4" || underMap[x][y] == "3" || underMap[x][y] == "2" || underMap[x][y] == "1"){
+    for (var x = 0; x < 3; x++) {
+        for (var y = 0; y < 3; y++) {
+            if (underMap[x][y] == "5" || underMap[x][y] == "4" || underMap[x][y] == "3" || underMap[x][y] == "2" || underMap[x][y] == "1") {
                 damageOnLoad = damageOnLoad + parseInt(underMap[x][y]);
             }
         }
@@ -141,14 +141,14 @@ function startAMap() {
     if (immediateRiskOfDeath > 7) {
         viability -= 20;
     }
-    if (damageOnLoad > 5){
+    if (damageOnLoad > 5) {
         viability -= 10;
     }
-    if (damageOnLoad >= 10){
+    if (damageOnLoad >= 10) {
         console.log("Player loses half of health or more immediately. Map discarded.");
         viability = 0;
     }
-    if (damageOnLoad >= 20){
+    if (damageOnLoad >= 20) {
         console.log("Player death occurs immediately. Map discarded.");
         viability = 0;
     }
@@ -247,7 +247,6 @@ function moveUp() {
     player.x--;
     console.log("Player is now at " + player.x + "," + player.y);
     turnCheck();
-    drawMap();
 }
 
 function moveDown() {
@@ -255,7 +254,6 @@ function moveDown() {
     player.x++;
     console.log("Player is now at " + player.x + "," + player.y);
     turnCheck();
-    drawMap();
 }
 
 function moveLeft() {
@@ -263,15 +261,12 @@ function moveLeft() {
     player.y--;
     console.log("Player is now at " + player.x + "," + player.y);
     turnCheck();
-    drawMap();
 }
-
 function moveRight() {
     map[player.x][player.y] = "x";
     player.y++;
     console.log("Player is now at " + player.x + "," + player.y);
     turnCheck();
-    drawMap();
 }
 
 function turnCheck() {
@@ -597,26 +592,31 @@ function enemiesCheck() {
             if (enemyOne.health <= 0 && map[x][y] == "1") {
                 map[x][y] = "x";
                 updateConsole("Enemy defeated at " + x + "," + y);
+                enemyOne.health = 0;
                 player.experience += 1;
             }
             if (enemyTwo.health <= 0 && map[x][y] == "2") {
                 map[x][y] = "x";
                 updateConsole("Enemy defeated at " + x + "," + y);
+                enemyTwo.health = 0;
                 player.experience += 2;
             }
             if (enemyThree.health <= 0 && map[x][y] == "3") {
                 map[x][y] = "x";
                 updateConsole("Enemy defeated at " + x + "," + y);
+                enemyThree.health = 0;
                 player.experience += 3;
             }
             if (enemyFour.health <= 0 && map[x][y] == "4") {
                 map[x][y] = "x";
                 updateConsole("Enemy defeated at " + x + "," + y);
+                enemyFour.health = 0;
                 player.experience += 4;
             }
             if (enemyFive.health <= 0 && map[x][y] == "5") {
                 map[x][y] = "x";
                 updateConsole("Enemy defeated at " + x + "," + y);
+                enemyFive.health = 0;
                 player.experience += 5;
             }
         }
@@ -648,7 +648,8 @@ function enemiesCheck() {
 }
 
 function checkLevelUp() {
-    if (player.experience == player.level * 5) {
+    console.log("Checking experience for a new level...");
+    if (player.experience >= player.level * 5) {
         player.experience -= player.level * 5;
         player.level++;
         player.strength++;
@@ -677,7 +678,7 @@ function interact() {
     console.log("Looking...");
     switch (underMap[player.x][player.y]) {
         case "^": player.health += 2; updateConsole("Found a healing potion."); break;
-        default: updateConsole("There's nothing here.");
+        default: updateConsole("There's nothing here."); break;
     }
     console.log(player);
     turnCheck();
