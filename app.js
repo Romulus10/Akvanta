@@ -40,10 +40,11 @@ var underMap = [["0", "^", "0", "1", "0", "0", "0", "0", "0", "0", "^", "0", "0"
 
 
 function startAMap() {
-    mapsChecked++;
-    for (var x = 0; x < 15; x++) {
-        for (var y = 0; y < 24; y++) {
-            var contents = Math.random() * 1000;
+    try {
+        mapsChecked++;
+        for (var x = 0; x < 15; x++) {
+            for (var y = 0; y < 24; y++) {
+                var contents = Math.random() * 1000;
             /*
             if (contents <= 25) {
                 underMap[x][y] = "5";
@@ -53,114 +54,119 @@ function startAMap() {
             }
             */
             /*else */ if (contents <= 225 && contents > 125) {
-                underMap[x][y] = "3";
-            }
-            else if (contents <= 350 && contents > 225) {
-                underMap[x][y] = "2";
-            }
-            else if (contents <= 575 && contents > 375 || contents < 100) {
-                underMap[x][y] = "1";
-            }
-            else if (contents <= 700 && contents > 600) {
-                underMap[x][y] = "!";
-            }
-            else if (contents <= 800 && contents > 700) {
-                underMap[x][y] = "^";
-            }
-            else {
-                underMap[x][y] = "0";
-            }
-        }
-    }
-    console.log("Map created.");
-    console.log("Testing map viability...");
-    var viability = 100;
-    var bossCount = 0;
-    var strongCount = 0;
-    var medCount = 0;
-    var nullSpace = 0;
-    var immediateRiskOfDeath = 0;
-    var damageOnLoad = 0;
-    for (var x = 0; x < 15; x++) {
-        for (var y = 0; y < 24; y++) {
-            if (underMap[x][y] == "5") {
-                bossCount++;
+                    underMap[x][y] = "3";
+                }
+                else if (contents <= 350 && contents > 225) {
+                    underMap[x][y] = "2";
+                }
+                else if (contents <= 575 && contents > 375 || contents < 100) {
+                    underMap[x][y] = "1";
+                }
+                else if (contents <= 700 && contents > 600) {
+                    underMap[x][y] = "!";
+                }
+                else if (contents <= 800 && contents > 700) {
+                    underMap[x][y] = "^";
+                }
+                else {
+                    underMap[x][y] = "0";
+                }
             }
         }
-    }
-    for (var x = 0; x < 15; x++) {
-        for (var y = 0; y < 24; y++) {
-            if (underMap[x][y] == "4") {
-                strongCount++;
+        console.log("Map created.");
+        console.log("Testing map viability...");
+        var viability = 100;
+        var bossCount = 0;
+        var strongCount = 0;
+        var medCount = 0;
+        var nullSpace = 0;
+        var immediateRiskOfDeath = 0;
+        var damageOnLoad = 0;
+        for (var x = 0; x < 15; x++) {
+            for (var y = 0; y < 24; y++) {
+                if (underMap[x][y] == "5") {
+                    bossCount++;
+                }
             }
         }
-    }
-    for (var x = 0; x < 15; x++) {
-        for (var y = 0; y < 24; y++) {
-            if (underMap[x][y] == "3") {
-                medCount++;
+        for (var x = 0; x < 15; x++) {
+            for (var y = 0; y < 24; y++) {
+                if (underMap[x][y] == "4") {
+                    strongCount++;
+                }
             }
         }
-    }
-    for (var x = 0; x < 15; x++) {
-        for (var y = 0; y < 24; y++) {
-            if (underMap[x][y] == "0") {
-                nullSpace++;
+        for (var x = 0; x < 15; x++) {
+            for (var y = 0; y < 24; y++) {
+                if (underMap[x][y] == "3") {
+                    medCount++;
+                }
             }
         }
-    }
-    for (var x = 0; x < 7; x++) {
-        for (var y = 0; y < 12; y++) {
-            if (underMap[x][y] == "5" || underMap[x][y] == "4") {
-                immediateRiskOfDeath += 2;
-            }
-            if (underMap[x][y] == "3") {
-                immediateRiskOfDeath++;
+        for (var x = 0; x < 15; x++) {
+            for (var y = 0; y < 24; y++) {
+                if (underMap[x][y] == "0") {
+                    nullSpace++;
+                }
             }
         }
-    }
-    for (var x = 0; x < 3; x++) {
-        for (var y = 0; y < 3; y++) {
-            if (underMap[x][y] == "5" || underMap[x][y] == "4" || underMap[x][y] == "3" || underMap[x][y] == "2" || underMap[x][y] == "1") {
-                damageOnLoad = damageOnLoad + parseInt(underMap[x][y]);
+        for (var x = 0; x < 7; x++) {
+            for (var y = 0; y < 12; y++) {
+                if (underMap[x][y] == "5" || underMap[x][y] == "4") {
+                    immediateRiskOfDeath += 2;
+                }
+                if (underMap[x][y] == "3") {
+                    immediateRiskOfDeath++;
+                }
             }
         }
+        for (var x = 0; x < 3; x++) {
+            for (var y = 0; y < 3; y++) {
+                if (underMap[x][y] == "5" || underMap[x][y] == "4" || underMap[x][y] == "3" || underMap[x][y] == "2" || underMap[x][y] == "1") {
+                    damageOnLoad = damageOnLoad + parseInt(underMap[x][y]);
+                }
+            }
+        }
+        if (bossCount >= 4 || bossCount <= 1) {
+            viability -= 20;
+        }
+        if (strongCount >= 7 || strongCount <= 4) {
+            viability -= 10;
+        }
+        if (medCount >= 10 || medCount <= 5) {
+            viability -= 5;
+        }
+        if (nullSpace >= 240 || nullSpace <= 120) {
+            viability -= 10;
+        }
+        if (immediateRiskOfDeath > 7) {
+            viability -= 20;
+        }
+        if (damageOnLoad > 5) {
+            viability -= 10;
+        }
+        if (damageOnLoad >= 10) {
+            console.log("Player loses half of health or more immediately. Map discarded.");
+            viability = 0;
+        }
+        if (damageOnLoad >= 20) {
+            console.log("Player death occurs immediately. Map discarded.");
+            viability = 0;
+        }
+        if (viability < 65) {
+            console.log("Map not viable.");
+            console.log(viability + "%");
+            startAMap();
+        }
+        else {
+            console.log("Map ready.");
+            console.log("Viability: " + viability + "%");
+            console.log("Maps checked: " + mapsChecked);
+        }
     }
-    if (bossCount >= 4 || bossCount <= 1) {
-        viability -= 20;
-    }
-    if (strongCount >= 7 || strongCount <= 4) {
-        viability -= 10;
-    }
-    if (medCount >= 10 || medCount <= 5) {
-        viability -= 5;
-    }
-    if (nullSpace >= 240 || nullSpace <= 120) {
-        viability -= 10;
-    }
-    if (immediateRiskOfDeath > 7) {
-        viability -= 20;
-    }
-    if (damageOnLoad > 5) {
-        viability -= 10;
-    }
-    if (damageOnLoad >= 10) {
-        console.log("Player loses half of health or more immediately. Map discarded.");
-        viability = 0;
-    }
-    if (damageOnLoad >= 20) {
-        console.log("Player death occurs immediately. Map discarded.");
-        viability = 0;
-    }
-    if (viability < 65) {
-        console.log("Map not viable.");
-        console.log(viability + "%");
-        startAMap();
-    }
-    else {
-        console.log("Map ready.");
-        console.log("Viability: " + viability + "%");
-        console.log("Maps checked: " + mapsChecked);
+    catch (TypeError) {
+        console.log("Map creation is taking a little longer than usual, going through again...");
+        location.reload();
     }
 }
 
@@ -243,27 +249,47 @@ function updateConsole(text) {
 }
 
 function moveUp() {
-    map[player.x][player.y] = "x";
+    if (underMap[player.x][player.y] != "1" && underMap[player.x][player.y] != "2" && underMap[player.x][player.y] != "3" && underMap[player.x][player.y] != "4" && underMap[player.x][player.y] != "5") {
+        map[player.x][player.y] = "x";
+    }
+    else{
+        map[player.x][player.y] = underMap[player.x][player.y];
+    }
     player.x--;
     console.log("Player is now at " + player.x + "," + player.y);
     turnCheck();
 }
 
 function moveDown() {
-    map[player.x][player.y] = "x";
+    if (underMap[player.x][player.y] != "1" && underMap[player.x][player.y] != "2" && underMap[player.x][player.y] != "3" && underMap[player.x][player.y] != "4" && underMap[player.x][player.y] != "5") {
+        map[player.x][player.y] = "x";
+    }
+    else{
+        map[player.x][player.y] = underMap[player.x][player.y];
+    }
     player.x++;
     console.log("Player is now at " + player.x + "," + player.y);
     turnCheck();
 }
 
 function moveLeft() {
-    map[player.x][player.y] = "x";
+    if (underMap[player.x][player.y] != "1" && underMap[player.x][player.y] != "2" && underMap[player.x][player.y] != "3" && underMap[player.x][player.y] != "4" && underMap[player.x][player.y] != "5") {
+        map[player.x][player.y] = "x";
+    }
+    else{
+        map[player.x][player.y] = underMap[player.x][player.y];
+    }
     player.y--;
     console.log("Player is now at " + player.x + "," + player.y);
     turnCheck();
 }
 function moveRight() {
-    map[player.x][player.y] = "x";
+    if (underMap[player.x][player.y] != "1" && underMap[player.x][player.y] != "2" && underMap[player.x][player.y] != "3" && underMap[player.x][player.y] != "4" && underMap[player.x][player.y] != "5") {
+        map[player.x][player.y] = "x";
+    }
+    else{
+        map[player.x][player.y] = underMap[player.x][player.y];
+    }
     player.y++;
     console.log("Player is now at " + player.x + "," + player.y);
     turnCheck();
@@ -691,29 +717,29 @@ function interact() {
     turnCheck();
 }
 
-function winCheck(){
+function winCheck() {
     console.log("Checking for a win.");
     var enemyCount = 0;
-    for (var x=0; x < 15; x++){
-        for (var y=0; y<23; y++){
-            if (underMap[x][y] == "1" || underMap[x][y] == "2" || underMap[x][y] == "3" || underMap[x][y] == "4" || underMap[x][y] == "5"){
+    for (var x = 0; x < 15; x++) {
+        for (var y = 0; y < 23; y++) {
+            if (underMap[x][y] == "1" || underMap[x][y] == "2" || underMap[x][y] == "3" || underMap[x][y] == "4" || underMap[x][y] == "5") {
                 enemyCount++;
             }
         }
     }
     console.log(enemyCount);
-    if (enemyCount == 0){
+    if (enemyCount == 0) {
         alert("Map cleared!");
         location.reload();
     }
 }
 
-function killAll(){
-    //Debug function. The player gets NO experience for using this function, it just triggers a "win" condition and reloads the game.
+function killAll() {
+    //Debug function. The player gets NO experience for using this function, it just triggers a "win" condition and loads a new map.
     console.log("cleaning map...");
-    for (var x=0; x < 15; x++){
-        for (var y=0; y<23; y++){
-            if (underMap[x][y] == "1" || underMap[x][y] == "2" || underMap[x][y] == "3" || underMap[x][y] == "4" || underMap[x][y] == "5"){
+    for (var x = 0; x < 15; x++) {
+        for (var y = 0; y < 23; y++) {
+            if (underMap[x][y] == "1" || underMap[x][y] == "2" || underMap[x][y] == "3" || underMap[x][y] == "4" || underMap[x][y] == "5") {
                 underMap[x][y] = "x";
                 map[x][y] = "x";
             }
