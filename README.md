@@ -12,14 +12,11 @@ o - An item.
 
 
 ### TODO
-* Comment all of the JavaScript.
-* Write the Wiki..
 * Add regions/rooms/areas.
 * Add an equipment screen.
 * Add an inventory screen.
 * Keep data persistent.
 * Improve code efficiency- it's probably abysmal at the moment.
-* Randomized maps. 
 * Implement further game items and events.
 
 # Version History
