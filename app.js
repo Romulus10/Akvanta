@@ -1,10 +1,11 @@
 var player = { name: "", health: 20, energy: 0, strength: 3, intellect: 1, level: 1, experience: 0, x: 1, y: 1 };
-var enemyOne = { health: 0, strength: 1 };
-var enemyTwo = { health: 0, strength: 2 };
-var enemyThree = { health: 0, strength: 3 };
-var enemyFour = { health: 0, strength: 4 };
-var enemyFive = { health: 0, strength: 5 };
+var enemyOne = { health: 0, strength: 1, modifier: 2 };
+var enemyTwo = { health: 0, strength: 2, modifier: 4 };
+var enemyThree = { health: 0, strength: 3, modifier: 6 };
+var enemyFour = { health: 0, strength: 4, modifier: 8 };
+var enemyFive = { health: 0, strength: 5, modifier: 10 };
 var mapsChecked = 0;
+var mapLevel = 0;
 
 var map = [["0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
     ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
@@ -166,7 +167,7 @@ function startAMap() {
     }
     catch (TypeError) {
         console.log("Map creation is taking a little longer than usual, going through again...");
-        location.reload();
+        startAMap();
     }
 }
 
@@ -226,7 +227,7 @@ function drawMap() {
 
 function writeStats() {
     console.log("Stats updating.");
-    document.getElementById("stats").innerHTML = player.name + "<br><br> Level: " + player.level + "<br> Experience: " + player.experience + "<br> Health: " + player.health + "<br> Energy: " + player.energy + "<br> Strength: " + player.strength + "<br> Intellect: " + player.intellect;
+    document.getElementById("stats").innerHTML = player.name + "<br><br> Level: " + player.level + "<br> Experience: " + player.experience + "<br> Health: " + player.health + "<br> Energy: " + player.energy + "<br> Strength: " + player.strength + "<br> Intellect: " + player.intellect + "<br> Maps Beaten: " + mapLevel;
     console.log(player);
     checkLevelUp();
     checkDead();
@@ -252,7 +253,7 @@ function moveUp() {
     if (underMap[player.x][player.y] != "1" && underMap[player.x][player.y] != "2" && underMap[player.x][player.y] != "3" && underMap[player.x][player.y] != "4" && underMap[player.x][player.y] != "5") {
         map[player.x][player.y] = "x";
     }
-    else{
+    else {
         map[player.x][player.y] = underMap[player.x][player.y];
     }
     player.x--;
@@ -264,7 +265,7 @@ function moveDown() {
     if (underMap[player.x][player.y] != "1" && underMap[player.x][player.y] != "2" && underMap[player.x][player.y] != "3" && underMap[player.x][player.y] != "4" && underMap[player.x][player.y] != "5") {
         map[player.x][player.y] = "x";
     }
-    else{
+    else {
         map[player.x][player.y] = underMap[player.x][player.y];
     }
     player.x++;
@@ -276,7 +277,7 @@ function moveLeft() {
     if (underMap[player.x][player.y] != "1" && underMap[player.x][player.y] != "2" && underMap[player.x][player.y] != "3" && underMap[player.x][player.y] != "4" && underMap[player.x][player.y] != "5") {
         map[player.x][player.y] = "x";
     }
-    else{
+    else {
         map[player.x][player.y] = underMap[player.x][player.y];
     }
     player.y--;
@@ -287,7 +288,7 @@ function moveRight() {
     if (underMap[player.x][player.y] != "1" && underMap[player.x][player.y] != "2" && underMap[player.x][player.y] != "3" && underMap[player.x][player.y] != "4" && underMap[player.x][player.y] != "5") {
         map[player.x][player.y] = "x";
     }
-    else{
+    else {
         map[player.x][player.y] = underMap[player.x][player.y];
     }
     player.y++;
@@ -414,7 +415,7 @@ function turnCheck() {
 function heal() {
     if (player.energy > 0) {
         player.energy--;
-        player.health += 5;
+        player.health += (player.intellect);
         updateConsole("Used a healing spell.");
         turnCheck();
     }
@@ -695,11 +696,11 @@ function checkLevelUp() {
 
 function findEnemy(x, y) {
     switch (map[x][y]) {
-        case "1": enemyOne.health = enemyOne.health + 2; updateConsole("Encountered an enemy at " + x + "," + y + "!"); break;
-        case "2": enemyTwo.health = enemyTwo.health + 4; updateConsole("Encountered an enemy at " + x + "," + y + "!"); break;
-        case "3": enemyThree.health = enemyThree.health + 6; updateConsole("Encountered an enemy at " + x + "," + y + "!"); break;
-        case "4": enemyFour.health = enemyFour.health + 8; updateConsole("Encountered an enemy at " + x + "," + y + "!"); break;
-        case "5": enemyFive.health = enemyFive.health + 10; updateConsole("Encountered an enemy at " + x + "," + y + "!"); break;
+        case "1": enemyOne.health = enemyOne.health + enemyOne.modifier; updateConsole("Encountered an enemy at " + x + "," + y + "!"); break;
+        case "2": enemyTwo.health = enemyTwo.health + enemyTwo.modifier; updateConsole("Encountered an enemy at " + x + "," + y + "!"); break;
+        case "3": enemyThree.health = enemyThree.health + enemyThree.modifier; updateConsole("Encountered an enemy at " + x + "," + y + "!"); break;
+        case "4": enemyFour.health = enemyFour.health + enemyFour.modifier; updateConsole("Encountered an enemy at " + x + "," + y + "!"); break;
+        case "5": enemyFive.health = enemyFive.health + enemyFive.modifier; updateConsole("Encountered an enemy at " + x + "," + y + "!"); break;
     }
 }
 
@@ -730,7 +731,31 @@ function winCheck() {
     console.log(enemyCount);
     if (enemyCount == 0) {
         alert("Map cleared!");
-        location.reload();
+        enemyOne.modifier++;
+        enemyTwo.modifer++;
+        enemyThree.modifier++;
+        enemyFour.modifier++;
+        enemyFive.modifier++;
+        mapLevel++;
+        player.level++;
+        player.health = 20 + (player.level * 5);
+        startAMap();
+        map = [["0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
+            ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
+            ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
+            ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
+            ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
+            ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
+            ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
+            ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
+            ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
+            ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
+            ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
+            ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
+            ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
+            ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
+            ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"]];
+        drawMap();
     }
 }
 
