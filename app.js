@@ -229,7 +229,7 @@ function writeStats() {
 function checkDead() {
     if (player.health <= 0) {
         alert("You are dead!");
-        window.location.assign("index.html");
+        location.reload();
     }
 }
 
@@ -271,6 +271,7 @@ function moveRight() {
 
 function turnCheck() {
     console.log("Checking results of last action.");
+    winCheck();
     var x = player.x;
     var y = player.y;
     if (x <= 0) {
@@ -380,6 +381,7 @@ function turnCheck() {
     }
     catch (TypeError) {
         console.log("On an edge, should still reveal spots on the board.");
+        drawMap();
     }
 }
 
@@ -682,4 +684,19 @@ function interact() {
     }
     console.log(player);
     turnCheck();
+}
+
+function winCheck(){
+    var enemyCount = 0;
+    for (var x=0; x < 15; x++){
+        for (var y=0; y<23; y++){
+            if (underMap[x][y] == "1" || underMap[x][y] == "2" || underMap[x][y] == "3" || underMap[x][y] == "4" || underMap[x][y] == "5"){
+                enemyCount++;
+            }
+        }
+    }
+    if (enemyCount == 0){
+        alert("Map cleared!");
+        location.reload();
+    }
 }
