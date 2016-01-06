@@ -593,30 +593,35 @@ function enemiesCheck() {
             //console.log(map[x][y]);
             if (enemyOne.health <= 0 && map[x][y] == "1") {
                 map[x][y] = "x";
+                underMap[x][y] = "x";
                 updateConsole("Enemy defeated at " + x + "," + y);
                 enemyOne.health = 0;
                 player.experience += 1;
             }
             if (enemyTwo.health <= 0 && map[x][y] == "2") {
                 map[x][y] = "x";
+                underMap[x][y] = "x";
                 updateConsole("Enemy defeated at " + x + "," + y);
                 enemyTwo.health = 0;
                 player.experience += 2;
             }
             if (enemyThree.health <= 0 && map[x][y] == "3") {
                 map[x][y] = "x";
+                underMap[x][y] = "x";
                 updateConsole("Enemy defeated at " + x + "," + y);
                 enemyThree.health = 0;
                 player.experience += 3;
             }
             if (enemyFour.health <= 0 && map[x][y] == "4") {
                 map[x][y] = "x";
+                underMap[x][y] = "x";
                 updateConsole("Enemy defeated at " + x + "," + y);
                 enemyFour.health = 0;
                 player.experience += 4;
             }
             if (enemyFive.health <= 0 && map[x][y] == "5") {
                 map[x][y] = "x";
+                underMap[x][y] = "x";
                 updateConsole("Enemy defeated at " + x + "," + y);
                 enemyFive.health = 0;
                 player.experience += 5;
@@ -687,6 +692,7 @@ function interact() {
 }
 
 function winCheck(){
+    console.log("Checking for a win.");
     var enemyCount = 0;
     for (var x=0; x < 15; x++){
         for (var y=0; y<23; y++){
@@ -695,8 +701,22 @@ function winCheck(){
             }
         }
     }
+    console.log(enemyCount);
     if (enemyCount == 0){
         alert("Map cleared!");
         location.reload();
+    }
+}
+
+function killAll(){
+    //Debug function. The player gets NO experience for using this function, it just triggers a "win" condition and reloads the game.
+    console.log("cleaning map...");
+    for (var x=0; x < 15; x++){
+        for (var y=0; y<23; y++){
+            if (underMap[x][y] == "1" || underMap[x][y] == "2" || underMap[x][y] == "3" || underMap[x][y] == "4" || underMap[x][y] == "5"){
+                underMap[x][y] = "x";
+                map[x][y] = "x";
+            }
+        }
     }
 }
