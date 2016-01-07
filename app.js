@@ -4,9 +4,12 @@ var enemyTwo = { health: 0, strength: 2, modifier: 4 };
 var enemyThree = { health: 0, strength: 3, modifier: 6 };
 var enemyFour = { health: 0, strength: 4, modifier: 8 };
 var enemyFive = { health: 0, strength: 5, modifier: 10 };
+// Stores the number of randomly-generated maps that have already been tested. 
 var mapsChecked = 0;
+// The number of maps the player has beaten. 
 var mapLevel = 0;
 
+// map holds the currently-displayed map with 0's representing fog of war. 
 var map = [["0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
     ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
     ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
@@ -23,6 +26,7 @@ var map = [["0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"
     ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
     ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"]];
 
+// underMap is the final randomly-generated map with object placements. 
 var underMap = [["0", "^", "0", "1", "0", "0", "0", "0", "0", "0", "^", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
     ["0", "0", "0", "0", "^", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
     ["0", "0", "1", "0", "0", "1", "0", "0", "0", "0", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
@@ -40,13 +44,13 @@ var underMap = [["0", "^", "0", "1", "0", "0", "0", "0", "0", "0", "^", "0", "0"
     ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"]];
 
 
+// Function for random generation of game maps. 
 function startAMap() {
     try {
         mapsChecked++;
         for (var x = 0; x < 15; x++) {
             for (var y = 0; y < 24; y++) {
                 var contents = Math.random() * 1000;
-            /*
             if (contents <= 25) {
                 underMap[x][y] = "5";
             }
@@ -171,6 +175,7 @@ function startAMap() {
     }
 }
 
+// Takes the player's chosen character name as an argument. Proceeds to initialize the 'player' structure to game start stats. 
 function createPlayer(str) {
     console.log("Player initializing.");
     player = {
