@@ -1,5 +1,5 @@
 // Romulus10's AKVANTA core.
-// Current iteration - 0.2.1
+// Current iteration - 0.2.0
 // January 7, 2016
 // Contributors please comment their names below this line.
 
