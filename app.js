@@ -1,3 +1,9 @@
+// Romulus10's AKVANTA core.
+// Current iteration - 0.2.0
+// January 7, 2016
+// Contributors please comment their names below this line.
+
+
 var player = { name: "", health: 20, energy: 0, strength: 3, intellect: 1, level: 1, experience: 0, x: 1, y: 1 };
 var enemyOne = { health: 0, strength: 1, modifier: 2 };
 var enemyTwo = { health: 0, strength: 2, modifier: 4 };
@@ -45,6 +51,7 @@ var underMap = [["0", "^", "0", "1", "0", "0", "0", "0", "0", "0", "^", "0", "0"
 
 
 // Function for random generation of game maps. 
+// TAG This function is CPU and memory inefficient. In later versions of the game, address that.
 function startAMap() {
     try {
         mapsChecked++;
@@ -57,7 +64,6 @@ function startAMap() {
             else if (contents <= 100 && contents > 50) {
                 underMap[x][y] = "4";
             }
-            */
             /*else */ if (contents <= 225 && contents > 125) {
                     underMap[x][y] = "3";
                 }
@@ -80,12 +86,19 @@ function startAMap() {
         }
         console.log("Map created.");
         console.log("Testing map viability...");
+        // If the map is considered winnable.
         var viability = 100;
+        // How many level 5 enemies there are.
         var bossCount = 0;
+        // How many level 4 enemies there are.
         var strongCount = 0;
+        // How many level 3 enemies there are.
         var medCount = 0;
+        // How many spots on the map are unoccupied.
         var nullSpace = 0;
+        // Uses a conditional to determine how likely the player is to die on the map.
         var immediateRiskOfDeath = 0;
+        // How much damage will occur to the player on the first turn, as soon as the map loads.
         var damageOnLoad = 0;
         for (var x = 0; x < 15; x++) {
             for (var y = 0; y < 24; y++) {
@@ -132,6 +145,7 @@ function startAMap() {
                 }
             }
         }
+        // Set of actions that checks the above variables and creates a map viability score.
         if (bossCount >= 4 || bossCount <= 1) {
             viability -= 20;
         }
@@ -170,6 +184,7 @@ function startAMap() {
         }
     }
     catch (TypeError) {
+        // Stops the game from crashing if the startAMap function passes the number of allowable recursions, at the cost of CPU time.
         console.log("Map creation is taking a little longer than usual, going through again...");
         startAMap();
     }
@@ -193,6 +208,7 @@ function createPlayer(str) {
     console.log("Player is at 1,1.");
 }
 
+// Run as soon as a new instance of the app is started.
 window.onload = function () {
     var url = self.location.toString();
     console.log(url);
@@ -209,6 +225,7 @@ window.onload = function () {
     drawMap();
 }
 
+// Print out the GUI representation of the map.
 function drawMap() {
     console.log("Drawing map...");
     var mapString = "";
@@ -230,6 +247,8 @@ function drawMap() {
     writeStats();
 }
 
+
+// Check the player's stats and write them to the stats pane.
 function writeStats() {
     console.log("Stats updating.");
     document.getElementById("stats").innerHTML = player.name + "<br><br> Level: " + player.level + "<br> Experience: " + player.experience + "<br> Health: " + player.health + "<br> Energy: " + player.energy + "<br> Strength: " + player.strength + "<br> Intellect: " + player.intellect + "<br> Maps Beaten: " + mapLevel;
@@ -238,36 +257,54 @@ function writeStats() {
     checkDead();
 }
 
+
+// Check if the player is dead.
 function checkDead() {
     if (player.health <= 0) {
         alert("You are dead!");
+        // Restart the game clean.
         location.reload();
     }
 }
 
+
+// Update the readout at the top of the UI and write the same information to the debug console.
 function updateConsole(text) {
+    // Get the 'console' element as a javascript object.
     var textarea = document.getElementById("console");
+    // Read the text currently occupying the textarea.
     var current = textarea.value;
+    // Concatenate the argumet to the current value of the console.
     current = current + "\n" + text;
+    // Repopulate the console with the new text.
     document.getElementById("console").value = current;
+    // Print the event to the debug console.
     console.log(text);
+    // Force the console to scroll to the bottom of its contents.
     textarea.scrollTop = 99999;
 }
 
+// Functions to move the player one tile in four directions.
+// X and Y axes are not configured as you might expect- be aware.
+// TAG Refactor for x and y axes to actually make sense.
+// Each function follows the same pattern as the initial commented function.
 function moveUp() {
-    if (underMap[player.x][player.y] != "1" && underMap[player.x][player.y] != "2" && underMap[player.x][player.y] != "3" && underMap[player.x][player.y] != "4" && underMap[player.x][player.y] != "5") {
+    // Check if the player's current position is shared with an enemy or a health potion..
+    if (underMap[player.x][player.y] != "1" && underMap[player.x][player.y] != "2" && underMap[player.x][player.y] != "3" && underMap[player.x][player.y] != "4" && underMap[player.x][player.y] != "5" && underMap[player.x][player.y] != "^") {
+        // If not, mark the player's current location as visited.
         map[player.x][player.y] = "x";
     }
     else {
+        // Otherwise, revert to what the space was before the player got there.
         map[player.x][player.y] = underMap[player.x][player.y];
     }
+    // Decrement the player's x axis position.
     player.x--;
     console.log("Player is now at " + player.x + "," + player.y);
     turnCheck();
 }
-
 function moveDown() {
-    if (underMap[player.x][player.y] != "1" && underMap[player.x][player.y] != "2" && underMap[player.x][player.y] != "3" && underMap[player.x][player.y] != "4" && underMap[player.x][player.y] != "5") {
+    if (underMap[player.x][player.y] != "1" && underMap[player.x][player.y] != "2" && underMap[player.x][player.y] != "3" && underMap[player.x][player.y] != "4" && underMap[player.x][player.y] != "5" && underMap[player.x][player.y] != "^") {
         map[player.x][player.y] = "x";
     }
     else {
@@ -277,9 +314,8 @@ function moveDown() {
     console.log("Player is now at " + player.x + "," + player.y);
     turnCheck();
 }
-
 function moveLeft() {
-    if (underMap[player.x][player.y] != "1" && underMap[player.x][player.y] != "2" && underMap[player.x][player.y] != "3" && underMap[player.x][player.y] != "4" && underMap[player.x][player.y] != "5") {
+    if (underMap[player.x][player.y] != "1" && underMap[player.x][player.y] != "2" && underMap[player.x][player.y] != "3" && underMap[player.x][player.y] != "4" && underMap[player.x][player.y] != "5" && underMap[player.x][player.y] != "^") {
         map[player.x][player.y] = "x";
     }
     else {
@@ -290,7 +326,7 @@ function moveLeft() {
     turnCheck();
 }
 function moveRight() {
-    if (underMap[player.x][player.y] != "1" && underMap[player.x][player.y] != "2" && underMap[player.x][player.y] != "3" && underMap[player.x][player.y] != "4" && underMap[player.x][player.y] != "5") {
+    if (underMap[player.x][player.y] != "1" && underMap[player.x][player.y] != "2" && underMap[player.x][player.y] != "3" && underMap[player.x][player.y] != "4" && underMap[player.x][player.y] != "5" && underMap[player.x][player.y] != "^") {
         map[player.x][player.y] = "x";
     }
     else {
@@ -301,6 +337,8 @@ function moveRight() {
     turnCheck();
 }
 
+
+// Not the most efficient funtion. Deals with player movement and fog of war system, as well as trap triggers.
 function turnCheck() {
     console.log("Checking results of last action.");
     winCheck();
@@ -412,11 +450,15 @@ function turnCheck() {
         enemiesCheck();
     }
     catch (TypeError) {
+        // Addresses an array index error that caused the player to appear to not be moving even when they were moving perfectly.
         console.log("On an edge, should still reveal spots on the board.");
         drawMap();
     }
 }
 
+
+// Healing spell method. Uses one point of the player's energy to increase the player's health by a value equal to their intellect value.
+// TAG Determine whether we want to keep allowing health overcharging.
 function heal() {
     if (player.energy > 0) {
         player.energy--;
@@ -430,6 +472,8 @@ function heal() {
     }
 }
 
+
+// Checks all spots around the player for enemies and reduces their respective health values by a value equal to the player's strength.
 function attack() {
     var x = player.x;
     var y = player.y;
@@ -613,6 +657,8 @@ function attack() {
     turnCheck();
 }
 
+
+// Check if any enemies are dead, award experience accordingly.
 function enemiesCheck() {
     console.log("Checking if anybody died.");
     console.log(enemyOne.health);
@@ -627,40 +673,41 @@ function enemiesCheck() {
                 map[x][y] = "x";
                 underMap[x][y] = "x";
                 updateConsole("Enemy defeated at " + x + "," + y);
-                enemyOne.health = 0;
+                enemyOne.health = 0; // This patches a bug where enemies were dying immediately as they were revealed because player attacks were putting their communal health pool below zero.
                 player.experience += 1;
             }
             if (enemyTwo.health <= 0 && map[x][y] == "2") {
                 map[x][y] = "x";
                 underMap[x][y] = "x";
                 updateConsole("Enemy defeated at " + x + "," + y);
-                enemyTwo.health = 0;
+                enemyTwo.health = 0; // This patches a bug where enemies were dying immediately as they were revealed because player attacks were putting their communal health pool below zero.
                 player.experience += 2;
             }
             if (enemyThree.health <= 0 && map[x][y] == "3") {
                 map[x][y] = "x";
                 underMap[x][y] = "x";
                 updateConsole("Enemy defeated at " + x + "," + y);
-                enemyThree.health = 0;
+                enemyThree.health = 0; // This patches a bug where enemies were dying immediately as they were revealed because player attacks were putting their communal health pool below zero.
                 player.experience += 3;
             }
             if (enemyFour.health <= 0 && map[x][y] == "4") {
                 map[x][y] = "x";
                 underMap[x][y] = "x";
                 updateConsole("Enemy defeated at " + x + "," + y);
-                enemyFour.health = 0;
+                enemyFour.health = 0; // This patches a bug where enemies were dying immediately as they were revealed because player attacks were putting their communal health pool below zero.
                 player.experience += 4;
             }
             if (enemyFive.health <= 0 && map[x][y] == "5") {
                 map[x][y] = "x";
                 underMap[x][y] = "x";
                 updateConsole("Enemy defeated at " + x + "," + y);
-                enemyFive.health = 0;
+                enemyFive.health = 0; // This patches a bug where enemies were dying immediately as they were revealed because player attacks were putting their communal health pool below zero.
                 player.experience += 5;
             }
         }
     }
     console.log("Ended dead check loop.");
+    // Any surviving enemies attack.
     if (enemyOne.health > 0) {
         console.log("Enemy One attack.");
         console.log(enemyOne.strength);
@@ -683,9 +730,12 @@ function enemiesCheck() {
         player.health = player.health - enemyFive.strength;
         updateConsole("Hit by an enemy.");
     }
+    // Re-draw the map with the results of this method.
     drawMap();
 }
 
+
+// Check if the player's experience is high enough to earn a new level.
 function checkLevelUp() {
     console.log("Checking experience for a new level...");
     if (player.experience >= player.level * 5) {
@@ -699,6 +749,8 @@ function checkLevelUp() {
     }
 }
 
+
+// Check if the latest check to clear the fog of war revealed an enemy.
 function findEnemy(x, y) {
     switch (map[x][y]) {
         case "1": enemyOne.health = enemyOne.health + enemyOne.modifier; updateConsole("Encountered an enemy at " + x + "," + y + "!"); break;
@@ -709,23 +761,30 @@ function findEnemy(x, y) {
     }
 }
 
+
+// When the window/application is closed, the entire contents of the scrolling console is dumped to the debug console.
 window.onbeforeunload = function () {
-    console.log(document.getElementById.value);
+    console.log(document.getElementById('console').value);
 }
 
+
+// Interact with any object on the same tile as the player.
 function interact() {
     console.log("Looking...");
     switch (underMap[player.x][player.y]) {
-        case "^": player.health += 2; updateConsole("Found a healing potion."); break;
+        case "^": player.health += 2; updateConsole("Found a healing potion."); underMap[player.x][player.y] = "x"; break; // Addition made to address a bug that could be exploited to gain unlimited health potions.
         default: updateConsole("There's nothing here."); break;
     }
     console.log(player);
     turnCheck();
 }
 
+
+// Check if the player has cleared the entire map.
 function winCheck() {
     console.log("Checking for a win.");
     var enemyCount = 0;
+    // Count the number of enemies remaining on the map.
     for (var x = 0; x < 15; x++) {
         for (var y = 0; y < 23; y++) {
             if (underMap[x][y] == "1" || underMap[x][y] == "2" || underMap[x][y] == "3" || underMap[x][y] == "4" || underMap[x][y] == "5") {
@@ -743,8 +802,11 @@ function winCheck() {
         enemyFive.modifier++;
         mapLevel++;
         player.level++;
+        // Reset the player's health.
         player.health = 20 + (player.level * 5);
+        // Generate a new map.
         startAMap();
+        // Reset the fog of war.
         map = [["0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
             ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
             ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
@@ -760,12 +822,13 @@ function winCheck() {
             ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
             ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
             ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"]];
+        // Redraw the map, replacing it with the new level.
         drawMap();
     }
 }
 
 function killAll() {
-    //Debug function. The player gets NO experience for using this function, it just triggers a "win" condition and loads a new map.
+    //Debug function. Should not connected to ANY UI elements.
     console.log("cleaning map...");
     for (var x = 0; x < 15; x++) {
         for (var y = 0; y < 23; y++) {
