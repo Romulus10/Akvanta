@@ -64,7 +64,6 @@ function startAMap() {
             else if (contents <= 100 && contents > 50) {
                 underMap[x][y] = "4";
             }
-            */
             /*else */ if (contents <= 225 && contents > 125) {
                     underMap[x][y] = "3";
                 }
