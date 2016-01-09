@@ -361,42 +361,42 @@ function turnCheck() {
     else { }
     map[x][y] = "X"
     try {
-        if (map[x - 1][y - 1] != "x" && map[x - 1][y - 1] == "0") {
+        if (map[x - 1][y - 1] != "x" && (map[x - 1][y - 1] == "0" || map[x-1][y-1] == "o")) {
             map[x - 1][y - 1] = underMap[x - 1][y - 1];
             findEnemy(x - 1, y - 1);
             console.log((x - 1) + "," + (y - 1));
         }
-        if (map[x - 1][y] != "x" && map[x - 1][y] == "0") {
+        if (map[x - 1][y] != "x" && (map[x - 1][y] == "0" || map[x-1][y] == "o")) {
             map[x - 1][y] = underMap[x - 1][y];
             findEnemy(x - 1, y);
             console.log((x - 1) + "," + (y));
         }
-        if (map[x - 1][y + 1] != "x" && map[x - 1][y + 1] == "0") {
+        if (map[x - 1][y + 1] != "x" && (map[x - 1][y + 1] == "0" || map[x-1][y+1] == "o")) {
             map[x - 1][y + 1] = underMap[x - 1][y + 1];
             findEnemy(x - 1, y + 1);
             console.log((x - 1) + "," + (y + 1));
         }
-        if (map[x][y - 1] != "x" && map[x][y - 1] == "0") {
+        if (map[x][y - 1] != "x" && (map[x][y - 1] == "0" || map[x][y-1] == "o")) {
             map[x][y - 1] = underMap[x][y - 1];
             findEnemy(x, y - 1);
             console.log((x) + "," + (y - 1));
         }
-        if (map[x][y + 1] != "x" && map[x][y + 1] == "0") {
+        if (map[x][y + 1] != "x" && (map[x][y + 1] == "0" || map[x][y+1] == "o")) {
             map[x][y + 1] = underMap[x][y + 1];
             findEnemy(x, y + 1);
             console.log((x) + "," + (y + 1));
         }
-        if (map[x + 1][y - 1] != "x" && map[x + 1][y - 1] == "0") {
+        if (map[x + 1][y - 1] != "x" && (map[x + 1][y - 1] == "0" || map[x+1][y-1] == "o")) {
             map[x + 1][y - 1] = underMap[x + 1][y - 1];
             findEnemy(x + 1, y - 1);
             console.log((x + 1) + "," + (y - 1));
         }
-        if (map[x + 1][y] != "x" && map[x + 1][y] == "0") {
+        if (map[x + 1][y] != "x" && (map[x + 1][y] == "0" || map[x+1][y] == "o")) {
             map[x + 1][y] = underMap[x + 1][y];
             findEnemy(x + 1, y);
             console.log((x + 1) + "," + (y));
         }
-        if (map[x + 1][y + 1] != "x" && map[x + 1][y + 1] == "0") {
+        if (map[x + 1][y + 1] != "x" && (map[x + 1][y + 1] == "0" || map[x+1][y+1] == "o")) {
             map[x + 1][y + 1] = underMap[x + 1][y + 1];
             findEnemy(x + 1, y + 1);
             console.log((x + 1) + "," + (y + 1));
@@ -831,9 +831,19 @@ function killAll() {
     console.log("cleaning map...");
     for (var x = 0; x < 15; x++) {
         for (var y = 0; y < 23; y++) {
-            if (underMap[x][y] == "1" || underMap[x][y] == "2" || underMap[x][y] == "3" || underMap[x][y] == "4" || underMap[x][y] == "5") {
+            if (underMap[x][y] == "1" || underMap[x][y] == "2" || underMap[x][y] == "3") {
                 underMap[x][y] = "x";
                 map[x][y] = "x";
+            }
+        }
+    }
+}
+
+function tagEnemies(){
+    for (var x = 0; x < 15; x++) {
+        for (var y = 0; y < 23; y++) {
+            if (underMap[x][y] == "1" || underMap[x][y] == "2" || underMap[x][y] == "3") {
+                map[x][y] = "o";
             }
         }
     }
