@@ -4,7 +4,7 @@
 // Contributors please comment their names below this line.
 
 
-var player = { name: "", health: 20, energy: 0, strength: 3, intellect: 1, level: 1, experience: 0, x: 1, y: 1 };
+var player = { name: "", health: 20, energy: 0, strength: 3, intellect: 1, level: 1, experience: 0, gold: 0, x: 1, y: 1 };
 var enemyOne = { health: 0, strength: 1, modifier: 2 };
 var enemyTwo = { health: 0, strength: 2, modifier: 4 };
 var enemyThree = { health: 0, strength: 3, modifier: 6 };
@@ -58,13 +58,7 @@ function startAMap() {
         for (var x = 0; x < 15; x++) {
             for (var y = 0; y < 24; y++) {
                 var contents = Math.random() * 1000;
-            if (contents <= 25) {
-                underMap[x][y] = "5";
-            }
-            else if (contents <= 100 && contents > 50) {
-                underMap[x][y] = "4";
-            }
-            /*else */ if (contents <= 225 && contents > 125) {
+                if (contents <= 225 && contents > 125) {
                     underMap[x][y] = "3";
                 }
                 else if (contents <= 350 && contents > 225) {
@@ -76,8 +70,11 @@ function startAMap() {
                 else if (contents <= 700 && contents > 600) {
                     underMap[x][y] = "!";
                 }
-                else if (contents <= 800 && contents > 700) {
+                else if (contents <= 800 && contents > 750) {
                     underMap[x][y] = "^";
+                }
+                else if (contents <= 750 && contents > 700){
+                    underMap[x][y] = "$";
                 }
                 else {
                     underMap[x][y] = "0";
@@ -201,6 +198,7 @@ function createPlayer(str) {
         intellect: 1,
         level: 1,
         experience: 0,
+        gold: 0,
         x: 1,
         y: 1
     };
@@ -251,7 +249,7 @@ function drawMap() {
 // Check the player's stats and write them to the stats pane.
 function writeStats() {
     console.log("Stats updating.");
-    document.getElementById("stats").innerHTML = player.name + "<br><br> Level: " + player.level + "<br> Experience: " + player.experience + "<br> Health: " + player.health + "<br> Energy: " + player.energy + "<br> Strength: " + player.strength + "<br> Intellect: " + player.intellect + "<br> Maps Beaten: " + mapLevel;
+    document.getElementById("stats").innerHTML = player.name + "<br><br> Level: " + player.level + "<br> Experience: " + player.experience + "<br> Health: " + player.health + "<br> Energy: " + player.energy + "<br> Strength: " + player.strength + "<br> Intellect: " + player.intellect + "<br> Gold: " + player.gold +  "<br> Maps Beaten: " + mapLevel;
     console.log(player);
     checkLevelUp();
     checkDead();
@@ -772,7 +770,8 @@ window.onbeforeunload = function () {
 function interact() {
     console.log("Looking...");
     switch (underMap[player.x][player.y]) {
-        case "^": player.health += (2+mapLevel); updateConsole("Found a healing potion."); underMap[player.x][player.y] = "x"; break; // Addition made to address a bug that could be exploited to gain unlimited health potions.
+        case "^": player.health += (2 + mapLevel); updateConsole("Found a healing potion."); underMap[player.x][player.y] = "x"; break; // Addition made to address a bug that could be exploited to gain unlimited health potions.
+        case "$": player.gold++; updateConsole("Found a coin."); underMap[player.x][player.y] = "x"; break;
         default: updateConsole("There's nothing here."); break;
     }
     console.log(player);
