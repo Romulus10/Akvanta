@@ -1,5 +1,5 @@
 // Romulus10's AKVANTA core.
-// Current iteration - 0.2.0
+// Current iteration - 0.3.0
 // January 7, 2016
 // Contributors please comment their names below this line.
 
@@ -840,6 +840,12 @@ function killAll() {
 }
 
 function tagEnemies(){
+    if (player.energy < 10){
+        updateConsole("You don't have enough energy.");
+    }
+    else{
+        player.energy -= 10;
+    updateConsole("Finding threats...");
     for (var x = 0; x < 15; x++) {
         for (var y = 0; y < 23; y++) {
             if (underMap[x][y] == "1" || underMap[x][y] == "2" || underMap[x][y] == "3") {
@@ -847,4 +853,5 @@ function tagEnemies(){
             }
         }
     }
-}
+    drawMap();
+}}
