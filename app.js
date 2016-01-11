@@ -260,6 +260,7 @@ function writeStats() {
 function checkDead() {
     if (player.health <= 0) {
         alert("You are dead!");
+        alert("Your score for this game: " + player.strength + mapLevel + player.experience);
         // Restart the game clean.
         location.reload();
     }
