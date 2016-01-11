@@ -1,6 +1,6 @@
 // Romulus10's AKVANTA core.
 // Current iteration - 0.3.0
-// January 7, 2016
+// January 10, 2016
 // Contributors please comment their names below this line.
 
 
@@ -73,7 +73,7 @@ function startAMap() {
                 else if (contents <= 800 && contents > 750) {
                     underMap[x][y] = "^";
                 }
-                else if (contents <= 750 && contents > 700){
+                else if (contents <= 750 && contents > 700) {
                     underMap[x][y] = "$";
                 }
                 else {
@@ -204,6 +204,8 @@ function createPlayer(str) {
     };
     map[player.x][player.y] = "X";
     console.log("Player is at 1,1.");
+    document.cookie = ("name=" + player.name + "; level=" + player.level + "; experience=" + player.experience + "; Health=" + player.health + "; energy=" + player.energy + "; strength=" + player.strength + "; intellect=" + player.intellect + "; gold= " + player.gold + "; mapsbeaten=" + mapLevel);
+    console.log(document.cookie);
 }
 
 // Run as soon as a new instance of the app is started.
@@ -249,7 +251,9 @@ function drawMap() {
 // Check the player's stats and write them to the stats pane.
 function writeStats() {
     console.log("Stats updating.");
-    document.getElementById("stats").innerHTML = player.name + "<br><br> Level: " + player.level + "<br> Experience: " + player.experience + "<br> Health: " + player.health + "<br> Energy: " + player.energy + "<br> Strength: " + player.strength + "<br> Intellect: " + player.intellect + "<br> Gold: " + player.gold +  "<br> Maps Beaten: " + mapLevel;
+    document.getElementById("stats").innerHTML = player.name + "<br><br> Level: " + player.level + "<br> Experience: " + player.experience + "<br> Health: " + player.health + "<br> Energy: " + player.energy + "<br> Strength: " + player.strength + "<br> Intellect: " + player.intellect + "<br> Gold: " + player.gold + "<br> Maps Beaten: " + mapLevel;
+    document.cookie = "name=" + player.name + "; level=" + player.level + "; experience=" + player.experience + "; Health=" + player.health + "; energy=" + player.energy + "; strength=" + player.strength + "; intellect=" + player.intellect + "; gold= " + player.gold + "; mapsbeaten=" + mapLevel;
+    console.log(document.cookie);
     console.log(player);
     checkLevelUp();
     checkDead();
@@ -360,43 +364,44 @@ function turnCheck() {
     }
     else { }
     map[x][y] = "X"
+    // Version 0.3.0 added the map[foo][bar] == "o" statements in order to comply with the newly-added enemy-finding power.
     try {
-        if (map[x - 1][y - 1] != "x" && (map[x - 1][y - 1] == "0" || map[x-1][y-1] == "o")) {
+        if (map[x - 1][y - 1] != "x" && (map[x - 1][y - 1] == "0" || map[x - 1][y - 1] == "o")) {
             map[x - 1][y - 1] = underMap[x - 1][y - 1];
             findEnemy(x - 1, y - 1);
             console.log((x - 1) + "," + (y - 1));
         }
-        if (map[x - 1][y] != "x" && (map[x - 1][y] == "0" || map[x-1][y] == "o")) {
+        if (map[x - 1][y] != "x" && (map[x - 1][y] == "0" || map[x - 1][y] == "o")) {
             map[x - 1][y] = underMap[x - 1][y];
             findEnemy(x - 1, y);
             console.log((x - 1) + "," + (y));
         }
-        if (map[x - 1][y + 1] != "x" && (map[x - 1][y + 1] == "0" || map[x-1][y+1] == "o")) {
+        if (map[x - 1][y + 1] != "x" && (map[x - 1][y + 1] == "0" || map[x - 1][y + 1] == "o")) {
             map[x - 1][y + 1] = underMap[x - 1][y + 1];
             findEnemy(x - 1, y + 1);
             console.log((x - 1) + "," + (y + 1));
         }
-        if (map[x][y - 1] != "x" && (map[x][y - 1] == "0" || map[x][y-1] == "o")) {
+        if (map[x][y - 1] != "x" && (map[x][y - 1] == "0" || map[x][y - 1] == "o")) {
             map[x][y - 1] = underMap[x][y - 1];
             findEnemy(x, y - 1);
             console.log((x) + "," + (y - 1));
         }
-        if (map[x][y + 1] != "x" && (map[x][y + 1] == "0" || map[x][y+1] == "o")) {
+        if (map[x][y + 1] != "x" && (map[x][y + 1] == "0" || map[x][y + 1] == "o")) {
             map[x][y + 1] = underMap[x][y + 1];
             findEnemy(x, y + 1);
             console.log((x) + "," + (y + 1));
         }
-        if (map[x + 1][y - 1] != "x" && (map[x + 1][y - 1] == "0" || map[x+1][y-1] == "o")) {
+        if (map[x + 1][y - 1] != "x" && (map[x + 1][y - 1] == "0" || map[x + 1][y - 1] == "o")) {
             map[x + 1][y - 1] = underMap[x + 1][y - 1];
             findEnemy(x + 1, y - 1);
             console.log((x + 1) + "," + (y - 1));
         }
-        if (map[x + 1][y] != "x" && (map[x + 1][y] == "0" || map[x+1][y] == "o")) {
+        if (map[x + 1][y] != "x" && (map[x + 1][y] == "0" || map[x + 1][y] == "o")) {
             map[x + 1][y] = underMap[x + 1][y];
             findEnemy(x + 1, y);
             console.log((x + 1) + "," + (y));
         }
-        if (map[x + 1][y + 1] != "x" && (map[x + 1][y + 1] == "0" || map[x+1][y+1] == "o")) {
+        if (map[x + 1][y + 1] != "x" && (map[x + 1][y + 1] == "0" || map[x + 1][y + 1] == "o")) {
             map[x + 1][y + 1] = underMap[x + 1][y + 1];
             findEnemy(x + 1, y + 1);
             console.log((x + 1) + "," + (y + 1));
@@ -839,19 +844,25 @@ function killAll() {
     }
 }
 
-function tagEnemies(){
-    if (player.energy < 10){
+function tagEnemies() {
+    if (player.energy < 10) {
         updateConsole("You don't have enough energy.");
     }
-    else{
+    else {
         player.energy -= 10;
-    updateConsole("Finding threats...");
-    for (var x = 0; x < 15; x++) {
-        for (var y = 0; y < 23; y++) {
-            if (underMap[x][y] == "1" || underMap[x][y] == "2" || underMap[x][y] == "3") {
-                map[x][y] = "o";
+        updateConsole("Finding threats...");
+        for (var x = 0; x < 15; x++) {
+            for (var y = 0; y < 23; y++) {
+                if (underMap[x][y] == "1" || underMap[x][y] == "2" || underMap[x][y] == "3") {
+                    map[x][y] = "o";
+                }
             }
         }
+        drawMap();
     }
-    drawMap();
-}}
+}
+
+function parseCookie(){
+    var cookie = document.cookie;
+    console.log(cookie);
+}
