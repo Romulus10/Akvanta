@@ -1,6 +1,6 @@
 // Romulus10's AKVANTA core.
 // Current iteration - 0.3.0
-// January 7, 2016
+// January 10, 2016
 // Contributors please comment their names below this line.
 
 
@@ -360,6 +360,7 @@ function turnCheck() {
     }
     else { }
     map[x][y] = "X"
+    // Version 0.3.0 added the map[foo][bar] == "o" statements in order to comply with the newly-added enemy-finding power.
     try {
         if (map[x - 1][y - 1] != "x" && (map[x - 1][y - 1] == "0" || map[x-1][y-1] == "o")) {
             map[x - 1][y - 1] = underMap[x - 1][y - 1];

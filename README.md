@@ -8,16 +8,17 @@ X - The player.
 ! - A trap.   
 o - An item.    
 1-3 - An enemy. Higher numbers mean higher difficulty to beat.   
-^ - Healing item.   
+^ - Healing item.
+$ - A coin.
 
 
 ### TODO
-* Add regions/rooms/areas.
 * Add an equipment screen.
 * Add an inventory screen.
 * Keep data persistent.
 * Improve code efficiency- it's probably abysmal at the moment.
 * Implement further game items and events.
+* A merchant system- buy stat buffs.
 
 # Version History
 * *0.3.0* Added a new spell, corrected small code problems, documentation updated. 
