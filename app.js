@@ -204,8 +204,6 @@ function createPlayer(str) {
     };
     map[player.x][player.y] = "X";
     console.log("Player is at 1,1.");
-    document.cookie = ("name=" + player.name + "; level=" + player.level + "; experience=" + player.experience + "; Health=" + player.health + "; energy=" + player.energy + "; strength=" + player.strength + "; intellect=" + player.intellect + "; gold= " + player.gold + "; mapsbeaten=" + mapLevel);
-    console.log(document.cookie);
 }
 
 // Run as soon as a new instance of the app is started.
@@ -252,8 +250,6 @@ function drawMap() {
 function writeStats() {
     console.log("Stats updating.");
     document.getElementById("stats").innerHTML = player.name + "<br><br> Level: " + player.level + "<br> Experience: " + player.experience + "<br> Health: " + player.health + "<br> Energy: " + player.energy + "<br> Strength: " + player.strength + "<br> Intellect: " + player.intellect + "<br> Gold: " + player.gold + "<br> Maps Beaten: " + mapLevel;
-    document.cookie = "name=" + player.name + "; level=" + player.level + "; experience=" + player.experience + "; Health=" + player.health + "; energy=" + player.energy + "; strength=" + player.strength + "; intellect=" + player.intellect + "; gold= " + player.gold + "; mapsbeaten=" + mapLevel;
-    console.log(document.cookie);
     console.log(player);
     checkLevelUp();
     checkDead();
@@ -264,8 +260,12 @@ function writeStats() {
 function checkDead() {
     if (player.health <= 0) {
         alert("You are dead!");
+        var score = player.strength + mapLevel + player.experience + player.gold;
+        alert("Your score for this game: " + score + ". It make take some time for your score to appear in the leaderboard.");
+        // Send the player's score as a new URL which should appear in the analytical data.
+        self.location = "scores.html?name=" + player.name + "&score=" + score;
         // Restart the game clean.
-        location.reload();
+        self.location = "game.html?name=" + player.name;
     }
 }
 
@@ -292,7 +292,7 @@ function updateConsole(text) {
 // Each function follows the same pattern as the initial commented function.
 function moveUp() {
     // Check if the player's current position is shared with an enemy or a health potion..
-    if (underMap[player.x][player.y] != "1" && underMap[player.x][player.y] != "2" && underMap[player.x][player.y] != "3" && underMap[player.x][player.y] != "4" && underMap[player.x][player.y] != "5" && underMap[player.x][player.y] != "^") {
+    if (underMap[player.x][player.y] != "1" && underMap[player.x][player.y] != "2" && underMap[player.x][player.y] != "3" && underMap[player.x][player.y] != "4" && underMap[player.x][player.y] != "5" && underMap[player.x][player.y] != "^" && underMap[player.x][player.y] != "$") {
         // If not, mark the player's current location as visited.
         map[player.x][player.y] = "x";
     }
@@ -306,7 +306,7 @@ function moveUp() {
     turnCheck();
 }
 function moveDown() {
-    if (underMap[player.x][player.y] != "1" && underMap[player.x][player.y] != "2" && underMap[player.x][player.y] != "3" && underMap[player.x][player.y] != "4" && underMap[player.x][player.y] != "5" && underMap[player.x][player.y] != "^") {
+    if (underMap[player.x][player.y] != "1" && underMap[player.x][player.y] != "2" && underMap[player.x][player.y] != "3" && underMap[player.x][player.y] != "4" && underMap[player.x][player.y] != "5" && underMap[player.x][player.y] != "^" && underMap[player.x][player.y] != "$") {
         map[player.x][player.y] = "x";
     }
     else {
@@ -317,7 +317,7 @@ function moveDown() {
     turnCheck();
 }
 function moveLeft() {
-    if (underMap[player.x][player.y] != "1" && underMap[player.x][player.y] != "2" && underMap[player.x][player.y] != "3" && underMap[player.x][player.y] != "4" && underMap[player.x][player.y] != "5" && underMap[player.x][player.y] != "^") {
+    if (underMap[player.x][player.y] != "1" && underMap[player.x][player.y] != "2" && underMap[player.x][player.y] != "3" && underMap[player.x][player.y] != "4" && underMap[player.x][player.y] != "5" && underMap[player.x][player.y] != "^" && underMap[player.x][player.y] != "$") {
         map[player.x][player.y] = "x";
     }
     else {
@@ -328,7 +328,7 @@ function moveLeft() {
     turnCheck();
 }
 function moveRight() {
-    if (underMap[player.x][player.y] != "1" && underMap[player.x][player.y] != "2" && underMap[player.x][player.y] != "3" && underMap[player.x][player.y] != "4" && underMap[player.x][player.y] != "5" && underMap[player.x][player.y] != "^") {
+    if (underMap[player.x][player.y] != "1" && underMap[player.x][player.y] != "2" && underMap[player.x][player.y] != "3" && underMap[player.x][player.y] != "4" && underMap[player.x][player.y] != "5" && underMap[player.x][player.y] != "^" && underMap[player.x][player.y] != "$") {
         map[player.x][player.y] = "x";
     }
     else {
@@ -364,7 +364,7 @@ function turnCheck() {
     }
     else { }
     map[x][y] = "X"
-    // Version 0.3.0 added the map[foo][bar] == "o" statements in order to comply with the newly-added enemy-finding power.
+    // Version 0.3.0 added the map[foo][bar] == "o" statements in order to reduce conflict with the newly-added enemy-finding power.
     try {
         if (map[x - 1][y - 1] != "x" && (map[x - 1][y - 1] == "0" || map[x - 1][y - 1] == "o")) {
             map[x - 1][y - 1] = underMap[x - 1][y - 1];
@@ -460,7 +460,7 @@ function turnCheck() {
 }
 
 
-// Healing spell method. Uses one point of the player's energy to increase the player's health by a value equal to their intellect value.
+// Healing spell function. Uses one point of the player's energy to increase the player's health by a value equal to their intellect value.
 // TAG Determine whether we want to keep allowing health overcharging.
 function heal() {
     if (player.energy > 0) {
@@ -860,9 +860,4 @@ function tagEnemies() {
         }
         drawMap();
     }
-}
-
-function parseCookie(){
-    var cookie = document.cookie;
-    console.log(cookie);
 }
