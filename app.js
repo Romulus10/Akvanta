@@ -261,7 +261,7 @@ function checkDead() {
     if (player.health <= 0) {
         alert("You are dead!");
         var score = player.strength + mapLevel + player.experience + player.gold;
-        alert("Your score for this game: " + score + ". It make take some time for your score to appear in the leaderboard.");
+        alert("Your score for this game: " + score + ".");
         // Send the player's score as a new URL which should appear in the analytical data.
         self.location = "scores.html?name=" + player.name + "&score=" + score;
         // Restart the game clean.
