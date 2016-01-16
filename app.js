@@ -776,7 +776,7 @@ function interact() {
     console.log("Looking...");
     switch (underMap[player.x][player.y]) {
         case "^": player.health += (2 + mapLevel); updateConsole("Found a healing potion."); underMap[player.x][player.y] = "x"; break; // Addition made to address a bug that could be exploited to gain unlimited health potions.
-        case "$": player.gold++; updateConsole("Found a coin."); underMap[player.x][player.y] = "x"; break;
+        case "$": player.gold += Math.round(Math.random*10); updateConsole("Found some coins."); underMap[player.x][player.y] = "x"; break;
         default: updateConsole("There's nothing here."); break;
     }
     console.log(player);
