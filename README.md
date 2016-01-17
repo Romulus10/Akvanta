@@ -21,6 +21,8 @@ $ - A coin.
 * A merchant system- buy stat buffs.
 
 # Version History
+* *0.3.2* UI revisions. Started work on better support for smaller screens.
+* *0.3.1* Minor changes.
 * *0.3.0* Added a new spell, corrected small code problems, documentation updated. 
 * *0.2.0* Large changes to the application core. Several bugs were addressed, including the wall stick bug. A manifest file for a Firefox OS application package was added, and a system for progressing through maps as earlier maps are cleared was implemented. As the player defeats maps, the maximum health of the enemies increases and their own level increases. The map level a player has reached is now displayed at the bottom of the stats display.
 * *0.1.1* Optimized for smaller screens. Bugfixes including- Double death alert, no health potion stats refresh, enemies dying as soon as they're revealed, player not leveling up.
