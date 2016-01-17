@@ -1,6 +1,6 @@
 // Romulus10's AKVANTA core.
-// Current iteration - 0.3.0
-// January 10, 2016
+// Current iteration - 0.3.1
+// January 16, 2016
 // Contributors please comment their names below this line.
 
 
@@ -51,7 +51,7 @@ var underMap = [["0", "^", "0", "1", "0", "0", "0", "0", "0", "0", "^", "0", "0"
 
 
 // Function for random generation of game maps. 
-// TAG This function is CPU and memory inefficient. In later versions of the game, address that.
+// @TODO This function is CPU and memory inefficient. In later versions of the game, address that.
 function startAMap() {
     try {
         mapsChecked++;
@@ -260,12 +260,15 @@ function writeStats() {
 function checkDead() {
     if (player.health <= 0) {
         alert("You are dead!");
+        console.log(player.strength);
+        console.log(mapLevel);
+        console.log(player.experience);
+        console.log(player.gold);
         var score = player.strength + mapLevel + player.experience + player.gold;
+        console.log(score);
         alert("Your score for this game: " + score + ".");
-        // Send the player's score as a new URL which should appear in the analytical data.
-        self.location = "scores.html?name=" + player.name + "&score=" + score;
-        // Restart the game clean.
-        self.location = "game.html?name=" + player.name;
+        // Start clean.
+        self.location.reload();
     }
 }
 
@@ -288,7 +291,7 @@ function updateConsole(text) {
 
 // Functions to move the player one tile in four directions.
 // X and Y axes are not configured as you might expect- be aware.
-// TAG Refactor for x and y axes to actually make sense.
+// @TODO Refactor for x and y axes to actually make sense.
 // Each function follows the same pattern as the initial commented function.
 function moveUp() {
     // Check if the player's current position is shared with an enemy or a health potion..
@@ -461,7 +464,7 @@ function turnCheck() {
 
 
 // Healing spell function. Uses one point of the player's energy to increase the player's health by a value equal to their intellect value.
-// TAG Determine whether we want to keep allowing health overcharging.
+// @TODO Determine whether we want to keep allowing health overcharging.
 function heal() {
     if (player.energy > 0) {
         player.energy--;
@@ -776,7 +779,7 @@ function interact() {
     console.log("Looking...");
     switch (underMap[player.x][player.y]) {
         case "^": player.health += (2 + mapLevel); updateConsole("Found a healing potion."); underMap[player.x][player.y] = "x"; break; // Addition made to address a bug that could be exploited to gain unlimited health potions.
-        case "$": player.gold += Math.round(Math.random*10); updateConsole("Found some coins."); underMap[player.x][player.y] = "x"; break;
+        case "$": player.gold += Math.round(Math.random()*10); updateConsole("Found some coins."); underMap[player.x][player.y] = "x"; break;
         default: updateConsole("There's nothing here."); break;
     }
     console.log(player);
