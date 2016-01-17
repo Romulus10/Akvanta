@@ -190,18 +190,34 @@ function startAMap() {
 // Takes the player's chosen character name as an argument. Proceeds to initialize the 'player' structure to game start stats. 
 function createPlayer(str) {
     console.log("Player initializing.");
-    player = {
-        name: str,
-        health: 20,
-        energy: 0,
-        strength: 3,
-        intellect: 1,
-        level: 1,
-        experience: 0,
-        gold: 0,
-        x: 1,
-        y: 1
-    };
+    if (localStorage.health <= 0 || localStorage.getItem("username") === null) {
+        player = {
+            name: str,
+            health: 20,
+            energy: 0,
+            strength: 3,
+            intellect: 1,
+            level: 1,
+            experience: 0,
+            gold: 0,
+            x: 1,
+            y: 1
+        };
+    }
+    else {
+        player = {
+            name: localStorage.name,
+            health: localStorage.health,
+            energy: localStorage.energy,
+            strength: localStorage.strength,
+            intellect: localStorage.intellect,
+            level: localStorage.level,
+            experience: localStorage.experience,
+            gold: localStorage.gold,
+            x: localStorage.x,
+            y: localStorage.y
+        };
+    }
     map[player.x][player.y] = "X";
     console.log("Player is at 1,1.");
 }
@@ -249,6 +265,16 @@ function drawMap() {
 // Check the player's stats and write them to the stats pane.
 function writeStats() {
     console.log("Stats updating.");
+    localStorage.name = player.name;
+    localStorage.level = player.level;
+    localStorage.experience = player.experience;
+    localStorage.health = player.health;
+    localStorage.energy = player.energy;
+    localStorage.strength = player.strength;
+    localStorage.intellect = player.intellect;
+    localStorage.gold = player.gold;
+    localStorage.x = player.x;
+    localStorage.y = player.y;
     document.getElementById("stats").innerHTML = player.name + "<br><br> Level: " + player.level + "<br> Experience: " + player.experience + "<br> Health: " + player.health + "<br> Energy: " + player.energy + "<br> Strength: " + player.strength + "<br> Intellect: " + player.intellect + "<br> Gold: " + player.gold + "<br> Maps Beaten: <br>" + mapLevel;
     console.log(player);
     checkLevelUp();

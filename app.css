@@ -11,18 +11,14 @@ body {
 	height: 100%;
 	background:#000;
 }
-#stats {
-    padding: .5%;
-}
-#map {
-    padding: .5%;
+#stats{
+    position: absolute;
+    right: 10px;
 }
 td {
-    padding: 2%;
     text-align: left;
 }
 th {
-	padding: 2%;
     text-align: left;
 }
 tr {
