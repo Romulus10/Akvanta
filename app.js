@@ -85,10 +85,6 @@ function startAMap() {
         console.log("Testing map viability...");
         // If the map is considered winnable.
         var viability = 100;
-        // How many level 5 enemies there are.
-        var bossCount = 0;
-        // How many level 4 enemies there are.
-        var strongCount = 0;
         // How many level 3 enemies there are.
         var medCount = 0;
         // How many spots on the map are unoccupied.
@@ -97,20 +93,6 @@ function startAMap() {
         var immediateRiskOfDeath = 0;
         // How much damage will occur to the player on the first turn, as soon as the map loads.
         var damageOnLoad = 0;
-        for (var x = 0; x < 15; x++) {
-            for (var y = 0; y < 24; y++) {
-                if (underMap[x][y] == "5") {
-                    bossCount++;
-                }
-            }
-        }
-        for (var x = 0; x < 15; x++) {
-            for (var y = 0; y < 24; y++) {
-                if (underMap[x][y] == "4") {
-                    strongCount++;
-                }
-            }
-        }
         for (var x = 0; x < 15; x++) {
             for (var y = 0; y < 24; y++) {
                 if (underMap[x][y] == "3") {
@@ -143,12 +125,6 @@ function startAMap() {
             }
         }
         // Set of actions that checks the above variables and creates a map viability score.
-        if (bossCount >= 4 || bossCount <= 1) {
-            viability -= 20;
-        }
-        if (strongCount >= 7 || strongCount <= 4) {
-            viability -= 10;
-        }
         if (medCount >= 10 || medCount <= 5) {
             viability -= 5;
         }
