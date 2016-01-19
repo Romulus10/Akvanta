@@ -237,6 +237,7 @@ window.onload = function () {
     drawMap();
     turnCheck();
     drawMap();
+    alert("Eliminate all enemies to progress.");
 }
 
 // Print out the GUI representation of the map.
