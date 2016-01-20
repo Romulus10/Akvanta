@@ -164,6 +164,7 @@ function createPlayer(str) {
     console.log("Player initializing.");
     console.log(localStorage.health);
     console.log(localStorage.username);
+    // If the player is dead or doesn't exist yet, create a totally new character from the blank template.
     if (localStorage.health <= 0 || localStorage.getItem("username") === null) {
         player = {
             name: str,
@@ -178,6 +179,7 @@ function createPlayer(str) {
             y: 1
         };
     }
+    // If the player exists and is alive, try to load their last character from the browser storage.
     else {
         player = {
             name: localStorage.name,
