@@ -162,8 +162,6 @@ function startAMap() {
 function createPlayer(str) {
     // @TODO I don't think this is loading old stats. Need to figure out why.
     console.log("Player initializing.");
-    console.log(localStorage.health);
-    console.log(localStorage.username);
     // If the player is dead or doesn't exist yet, create a totally new character from the blank template.
     if (localStorage.health <= 0 || localStorage.getItem("username") === null) {
         player = {
@@ -195,18 +193,13 @@ function createPlayer(str) {
         };
     }
     map[player.x][player.y] = "X";
-    console.log("Player is at 1,1.");
 }
 
 // Run as soon as a new instance of the app is started.
 window.onload = function () {
     var url = self.location.toString();
-    console.log(url);
     var nex = url.search("=");
-    console.log(nex);
     var str = url.substring(nex + 1);
-    console.log(str);
-    console.log("Started a new game as " + str);
     updateConsole("Welcome to Akvanta.");
     startAMap();
     createPlayer(str);
@@ -218,19 +211,13 @@ window.onload = function () {
 
 // Print out the GUI representation of the map.
 function drawMap() {
-    console.log("Drawing map...");
     var mapString = "";
     for (var x = 0; x < 15; x++) {
         for (var y = 0; y < 24; y++) {
             try {
                 mapString = mapString + map[x][y];
             }
-            catch (TypeError) {
-                console.log("TypeError occurred on line 53:");
-                console.log(x);
-                console.log(y);
-                console.log(map[x][y]);
-            }
+            catch (TypeError) {}
         }
         mapString = mapString + "&#13;&#10;"
     }
@@ -241,7 +228,6 @@ function drawMap() {
 
 // Check the player's stats and write them to the stats pane.
 function writeStats() {
-    console.log("Stats updating.");
     // Store statistics for recall later.
     localStorage.name = player.name;
     localStorage.level = player.level;
@@ -254,7 +240,6 @@ function writeStats() {
     localStorage.x = player.x;
     localStorage.y = player.y;
     document.getElementById("stats").innerHTML = player.name + "<br><br> Level: " + player.level + "<br> Experience: " + player.experience + "<br> Health: " + player.health + "<br> Energy: " + player.energy + "<br> Strength: " + player.strength + "<br> Intellect: " + player.intellect + "<br> Gold: " + player.gold + "<br> Maps Beaten: <br>" + mapLevel;
-    console.log(player);
     checkLevelUp();
     checkDead();
 }
@@ -264,12 +249,7 @@ function writeStats() {
 function checkDead() {
     if (player.health <= 0) {
         alert("You are dead!");
-        console.log(player.strength);
-        console.log(mapLevel);
-        console.log(player.experience);
-        console.log(player.gold);
         var score = player.strength + mapLevel + player.experience + player.gold;
-        console.log(score);
         alert("Your score for this game: " + score + ".");
         // Start clean.
         self.location.reload();
@@ -309,8 +289,6 @@ function moveUp() {
     }
     // Decrement the player's x axis position.
     player.x--;
-    // Tell the debug console where the player is.
-    console.log("Player is now at " + player.x + "," + player.y);
     // Check the state of the board.
     turnCheck();
 }
@@ -322,7 +300,6 @@ function moveDown() {
         map[player.x][player.y] = underMap[player.x][player.y];
     }
     player.x++;
-    console.log("Player is now at " + player.x + "," + player.y);
     turnCheck();
 }
 function moveLeft() {
@@ -333,7 +310,6 @@ function moveLeft() {
         map[player.x][player.y] = underMap[player.x][player.y];
     }
     player.y--;
-    console.log("Player is now at " + player.x + "," + player.y);
     turnCheck();
 }
 function moveRight() {
@@ -344,31 +320,25 @@ function moveRight() {
         map[player.x][player.y] = underMap[player.x][player.y];
     }
     player.y++;
-    console.log("Player is now at " + player.x + "," + player.y);
     turnCheck();
 }
 
 
 // Not the most efficient funtion. Deals with player movement and fog of war system, as well as trap triggers.
 function turnCheck() {
-    console.log("Checking results of last action.");
     winCheck();
     var x = player.x;
     var y = player.y;
     if (x <= 0) {
-        console.log("On the edge. Don't move any further over.");
         updateConsole("There is a wall here. ");
     }
     else if (y <= 0) {
-        console.log("On the edge. Don't move any further over.");
         updateConsole("There is a wall here. ");
     }
     else if (x >= 15) {
-        console.log("On the edge. Don't move any further over.");
         updateConsole("There is a wall here. ");
     }
     else if (y >= 23) {
-        console.log("On the edge. Don't move any further over.");
         updateConsole("There is a wall here. ");
     }
     else { }
@@ -378,43 +348,34 @@ function turnCheck() {
         if (map[x - 1][y - 1] != "x" && (map[x - 1][y - 1] == "0" || map[x - 1][y - 1] == "o")) {
             map[x - 1][y - 1] = underMap[x - 1][y - 1];
             findEnemy(x - 1, y - 1);
-            console.log((x - 1) + "," + (y - 1));
         }
         if (map[x - 1][y] != "x" && (map[x - 1][y] == "0" || map[x - 1][y] == "o")) {
             map[x - 1][y] = underMap[x - 1][y];
             findEnemy(x - 1, y);
-            console.log((x - 1) + "," + (y));
         }
         if (map[x - 1][y + 1] != "x" && (map[x - 1][y + 1] == "0" || map[x - 1][y + 1] == "o")) {
             map[x - 1][y + 1] = underMap[x - 1][y + 1];
             findEnemy(x - 1, y + 1);
-            console.log((x - 1) + "," + (y + 1));
         }
         if (map[x][y - 1] != "x" && (map[x][y - 1] == "0" || map[x][y - 1] == "o")) {
             map[x][y - 1] = underMap[x][y - 1];
             findEnemy(x, y - 1);
-            console.log((x) + "," + (y - 1));
         }
         if (map[x][y + 1] != "x" && (map[x][y + 1] == "0" || map[x][y + 1] == "o")) {
             map[x][y + 1] = underMap[x][y + 1];
             findEnemy(x, y + 1);
-            console.log((x) + "," + (y + 1));
         }
         if (map[x + 1][y - 1] != "x" && (map[x + 1][y - 1] == "0" || map[x + 1][y - 1] == "o")) {
             map[x + 1][y - 1] = underMap[x + 1][y - 1];
             findEnemy(x + 1, y - 1);
-            console.log((x + 1) + "," + (y - 1));
         }
         if (map[x + 1][y] != "x" && (map[x + 1][y] == "0" || map[x + 1][y] == "o")) {
             map[x + 1][y] = underMap[x + 1][y];
             findEnemy(x + 1, y);
-            console.log((x + 1) + "," + (y));
         }
         if (map[x + 1][y + 1] != "x" && (map[x + 1][y + 1] == "0" || map[x + 1][y + 1] == "o")) {
             map[x + 1][y + 1] = underMap[x + 1][y + 1];
             findEnemy(x + 1, y + 1);
-            console.log((x + 1) + "," + (y + 1));
-            console.log("It fired that time.");
         }
         if (map[x - 1][y - 1] == "!") {
             updateConsole("A trap!");
@@ -463,7 +424,6 @@ function turnCheck() {
     }
     catch (TypeError) {
         // Addresses an array index error that caused the player to appear to not be moving even when they were moving perfectly.
-        console.log("On an edge, should still reveal spots on the board.");
         drawMap();
     }
 }
@@ -489,7 +449,6 @@ function heal() {
 function attack() {
     var x = player.x;
     var y = player.y;
-    console.log("Attacking.");
     if (map[x - 1][y - 1] == "1") {
         enemyOne.health = enemyOne.health - player.strength;
         updateConsole("Hit an enemy!");
@@ -563,7 +522,6 @@ function attack() {
         updateConsole("Hit an enemy!");
     }
     if (map[x + 1][y - 1] == "3") {
-        console.log("That one.");
         enemyThree.health = enemyThree.health - player.strength;
         updateConsole("Hit an enemy!");
     }
@@ -587,7 +545,6 @@ function attack() {
         enemyThree.health = enemyThree.health - player.strength;
         updateConsole("Hit an enemy!");
     }
-    console.log("Attack reached the end.");
     enemiesCheck();
     turnCheck();
 }
@@ -595,13 +552,8 @@ function attack() {
 
 // Check if any enemies are dead, award experience accordingly.
 function enemiesCheck() {
-    console.log("Checking if anybody died.");
-    console.log(enemyOne.health);
-    console.log(enemyTwo.health);
-    console.log(enemyThree.health);
     for (var x = 0; x < 15; x++) {
         for (var y = 0; y < 24; y++) {
-            //console.log(map[x][y]);
             if (enemyOne.health <= 0 && map[x][y] == "1") {
                 map[x][y] = "x";
                 underMap[x][y] = "x";
@@ -625,7 +577,6 @@ function enemiesCheck() {
             }
         }
     }
-    console.log("Ended dead check loop.");
     // Any surviving enemies attack.
     if (enemyOne.health > 0) {
         player.health = player.health - enemyOne.strength
@@ -646,7 +597,6 @@ function enemiesCheck() {
 
 // Check if the player's experience is high enough to earn a new level.
 function checkLevelUp() {
-    console.log("Checking experience for a new level...");
     if (player.experience >= player.level * 5) {
         player.experience -= player.level * 5;
         player.level++;
@@ -668,29 +618,19 @@ function findEnemy(x, y) {
     }
 }
 
-
-// When the window/application is closed, the entire contents of the scrolling console is dumped to the debug console.
-window.onbeforeunload = function () {
-    console.log(document.getElementById('console').value);
-}
-
-
 // Interact with any object on the same tile as the player.
 function interact() {
-    console.log("Looking...");
     switch (underMap[player.x][player.y]) {
         case "^": player.health += (2 + mapLevel); updateConsole("Found a healing potion."); underMap[player.x][player.y] = "x"; break; // Addition made to address a bug that could be exploited to gain unlimited health potions.
         case "$": player.gold += Math.round(Math.random()*10); updateConsole("Found some coins."); underMap[player.x][player.y] = "x"; break;
         default: updateConsole("There's nothing here."); break;
     }
-    console.log(player);
     turnCheck();
 }
 
 
 // Check if the player has cleared the entire map.
 function winCheck() {
-    console.log("Checking for a win.");
     var enemyCount = 0;
     // Count the number of enemies remaining on the map.
     for (var x = 0; x < 15; x++) {
@@ -700,7 +640,6 @@ function winCheck() {
             }
         }
     }
-    console.log(enemyCount);
     if (enemyCount == 0) {
         alert("Map cleared!");
         enemyOne.modifier++;
@@ -735,7 +674,6 @@ function winCheck() {
 
 function killAll() {
     //Debug function. Should not connected to ANY UI elements.
-    console.log("cleaning map...");
     for (var x = 0; x < 15; x++) {
         for (var y = 0; y < 23; y++) {
             if (underMap[x][y] == "1" || underMap[x][y] == "2" || underMap[x][y] == "3") {
