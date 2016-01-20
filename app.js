@@ -109,9 +109,6 @@ function startAMap() {
         }
         for (var x = 0; x < 7; x++) {
             for (var y = 0; y < 12; y++) {
-                if (underMap[x][y] == "5" || underMap[x][y] == "4") {
-                    immediateRiskOfDeath += 2;
-                }
                 if (underMap[x][y] == "3") {
                     immediateRiskOfDeath++;
                 }
@@ -119,7 +116,7 @@ function startAMap() {
         }
         for (var x = 0; x < 3; x++) {
             for (var y = 0; y < 3; y++) {
-                if (underMap[x][y] == "5" || underMap[x][y] == "4" || underMap[x][y] == "3" || underMap[x][y] == "2" || underMap[x][y] == "1") {
+                if (underMap[x][y] == "3" || underMap[x][y] == "2" || underMap[x][y] == "1") {
                     damageOnLoad = damageOnLoad + parseInt(underMap[x][y]);
                 }
             }
