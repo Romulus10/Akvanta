@@ -242,6 +242,7 @@ function drawMap() {
 // Check the player's stats and write them to the stats pane.
 function writeStats() {
     console.log("Stats updating.");
+    // Store statistics for recall later.
     localStorage.name = player.name;
     localStorage.level = player.level;
     localStorage.experience = player.experience;
@@ -308,7 +309,9 @@ function moveUp() {
     }
     // Decrement the player's x axis position.
     player.x--;
+    // Tell the debug console where the player is.
     console.log("Player is now at " + player.x + "," + player.y);
+    // Check the state of the board.
     turnCheck();
 }
 function moveDown() {
