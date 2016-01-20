@@ -160,6 +160,7 @@ function startAMap() {
 
 // Takes the player's chosen character name as an argument. Proceeds to initialize the 'player' structure to game start stats. 
 function createPlayer(str) {
+    // @TODO I don't think this is loading old stats. Need to figure out why.
     console.log("Player initializing.");
     console.log(localStorage.health);
     console.log(localStorage.username);
