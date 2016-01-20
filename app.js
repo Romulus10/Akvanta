@@ -8,8 +8,6 @@ var player = { name: "", health: 20, energy: 0, strength: 3, intellect: 1, level
 var enemyOne = { health: 0, strength: 1, modifier: 2 };
 var enemyTwo = { health: 0, strength: 2, modifier: 4 };
 var enemyThree = { health: 0, strength: 3, modifier: 6 };
-var enemyFour = { health: 0, strength: 4, modifier: 8 };
-var enemyFive = { health: 0, strength: 5, modifier: 10 };
 // Stores the number of randomly-generated maps that have already been tested. 
 var mapsChecked = 0;
 // The number of maps the player has beaten. 
@@ -596,70 +594,6 @@ function attack() {
         enemyThree.health = enemyThree.health - player.strength;
         updateConsole("Hit an enemy!");
     }
-    if (map[x - 1][y - 1] == "4") {
-        enemyFour.health = enemyFour.health - player.strength;
-        updateConsole("Hit an enemy!");
-    }
-    if (map[x][y - 1] == "4") {
-        enemyFour.health = enemyFour.health - player.strength;
-        updateConsole("Hit an enemy!");
-    }
-    if (map[x + 1][y - 1] == "4") {
-        enemyFour.health = enemyFour.health - player.strength;
-        updateConsole("Hit an enemy!");
-    }
-    if (map[x - 1][y] == "4") {
-        enemyFour.health = enemyFour.health - player.strength;
-        updateConsole("Hit an enemy!");
-    }
-    if (map[x + 1][y] == "4") {
-        enemyFour.health = enemyFour.health - player.strength;
-        updateConsole("Hit an enemy!");
-    }
-    if (map[x - 1][y + 1] == "4") {
-        enemyFour.health = enemyFour.health - player.strength;
-        updateConsole("Hit an enemy!");
-    }
-    if (map[x][y + 1] == "4") {
-        enemyFour.health = enemyFour.health - player.strength;
-        updateConsole("Hit an enemy!");
-    }
-    if (map[x + 1][y + 1] == "4") {
-        enemyFour.health = enemyFour.health - player.strength;
-        updateConsole("Hit an enemy!");
-    }
-    if (map[x - 1][y - 1] == "5") {
-        enemyFive.health = enemyFive.health - player.strength;
-        updateConsole("Hit an enemy!");
-    }
-    if (map[x][y - 1] == "5") {
-        enemyFive.health = enemyFive.health - player.strength;
-        updateConsole("Hit an enemy!");
-    }
-    if (map[x + 1][y - 1] == "5") {
-        enemyFive.health = enemyFive.health - player.strength;
-        updateConsole("Hit an enemy!");
-    }
-    if (map[x - 1][y] == "5") {
-        enemyFive.health = enemyFive.health - player.strength;
-        updateConsole("Hit an enemy!");
-    }
-    if (map[x + 1][y] == "5") {
-        enemyFive.health = enemyFive.health - player.strength;
-        updateConsole("Hit an enemy!");
-    }
-    if (map[x - 1][y + 1] == "5") {
-        enemyFive.health = enemyFive.health - player.strength;
-        updateConsole("Hit an enemy!");
-    }
-    if (map[x][y + 1] == "5") {
-        enemyFive.health = enemyFive.health - player.strength;
-        updateConsole("Hit an enemy!");
-    }
-    if (map[x + 1][y + 1] == "5") {
-        enemyFive.health = enemyFive.health - player.strength;
-        updateConsole("Hit an enemy!");
-    }
     console.log("Attack reached the end.");
     enemiesCheck();
     turnCheck();
@@ -672,8 +606,6 @@ function enemiesCheck() {
     console.log(enemyOne.health);
     console.log(enemyTwo.health);
     console.log(enemyThree.health);
-    console.log(enemyFour.health);
-    console.log(enemyFive.health);
     for (var x = 0; x < 15; x++) {
         for (var y = 0; y < 24; y++) {
             //console.log(map[x][y]);
@@ -698,20 +630,6 @@ function enemiesCheck() {
                 enemyThree.health = 0; // This patches a bug where enemies were dying immediately as they were revealed because player attacks were putting their communal health pool below zero.
                 player.experience += 3;
             }
-            if (enemyFour.health <= 0 && map[x][y] == "4") {
-                map[x][y] = "x";
-                underMap[x][y] = "x";
-                updateConsole("Enemy defeated at " + x + "," + y);
-                enemyFour.health = 0; // This patches a bug where enemies were dying immediately as they were revealed because player attacks were putting their communal health pool below zero.
-                player.experience += 4;
-            }
-            if (enemyFive.health <= 0 && map[x][y] == "5") {
-                map[x][y] = "x";
-                underMap[x][y] = "x";
-                updateConsole("Enemy defeated at " + x + "," + y);
-                enemyFive.health = 0; // This patches a bug where enemies were dying immediately as they were revealed because player attacks were putting their communal health pool below zero.
-                player.experience += 5;
-            }
         }
     }
     console.log("Ended dead check loop.");
@@ -728,14 +646,6 @@ function enemiesCheck() {
     }
     if (enemyThree.health > 0) {
         player.health = player.health - enemyThree.strength;
-        updateConsole("Hit by an enemy.");
-    }
-    if (enemyFour.health > 0) {
-        player.health = player.health - enemyFour.strength;
-        updateConsole("Hit by an enemy.");
-    }
-    if (enemyFive.health > 0) {
-        player.health = player.health - enemyFive.strength;
         updateConsole("Hit by an enemy.");
     }
     // Re-draw the map with the results of this method.
@@ -764,8 +674,6 @@ function findEnemy(x, y) {
         case "1": enemyOne.health = enemyOne.health + enemyOne.modifier; updateConsole("Encountered an enemy at " + x + "," + y + "!"); break;
         case "2": enemyTwo.health = enemyTwo.health + enemyTwo.modifier; updateConsole("Encountered an enemy at " + x + "," + y + "!"); break;
         case "3": enemyThree.health = enemyThree.health + enemyThree.modifier; updateConsole("Encountered an enemy at " + x + "," + y + "!"); break;
-        case "4": enemyFour.health = enemyFour.health + enemyFour.modifier; updateConsole("Encountered an enemy at " + x + "," + y + "!"); break;
-        case "5": enemyFive.health = enemyFive.health + enemyFive.modifier; updateConsole("Encountered an enemy at " + x + "," + y + "!"); break;
     }
 }
 
@@ -807,8 +715,6 @@ function winCheck() {
         enemyOne.modifier++;
         enemyTwo.modifer++;
         enemyThree.modifier++;
-        enemyFour.modifier++;
-        enemyFive.modifier++;
         mapLevel++;
         player.level++;
         // Reset the player's health.
