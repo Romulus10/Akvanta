@@ -484,47 +484,35 @@ function attack() {
     var x = player.x;
     var y = player.y;
     console.log("Attacking.");
-    console.log(enemyOne);
-    console.log(enemyOne.health);
     if (map[x - 1][y - 1] == "1") {
-        console.log(player.strength);
         enemyOne.health = enemyOne.health - player.strength;
         updateConsole("Hit an enemy!");
     }
     if (map[x][y - 1] == "1") {
-        console.log(player.strength);
         enemyOne.health = enemyOne.health - player.strength;
         updateConsole("Hit an enemy!");
     }
     if (map[x + 1][y - 1] == "1") {
-        console.log(player.strength);
         enemyOne.health = enemyOne.health - player.strength;
         updateConsole("Hit an enemy!");
     }
     if (map[x - 1][y] == "1") {
-        console.log(player.strength);
         enemyOne.health = enemyOne.health - player.strength;
         updateConsole("Hit an enemy!");
     }
     if (map[x + 1][y] == "1") {
-        console.log(player.strength);
         enemyOne.health = enemyOne.health - player.strength;
         updateConsole("Hit an enemy!");
     }
     if (map[x - 1][y + 1] == "1") {
-        console.log(player.strength);
         enemyOne.health = enemyOne.health - player.strength;
         updateConsole("Hit an enemy!");
     }
     if (map[x][y + 1] == "1") {
-        console.log(player.strength);
         enemyOne.health = enemyOne.health - player.strength;
         updateConsole("Hit an enemy!");
     }
     if (map[x + 1][y + 1] == "1") {
-        //console.log("Here we go.");
-        console.log(enemyOne);
-        console.log(player.strength);
         enemyOne.health = enemyOne.health - player.strength;
         updateConsole("Hit an enemy!");
     }
@@ -582,7 +570,6 @@ function attack() {
         updateConsole("Hit an enemy!");
     }
     if (map[x - 1][y + 1] == "3") {
-        console.log("This one.");
         enemyThree.health = enemyThree.health - player.strength;
         updateConsole("Hit an enemy!");
     }
@@ -635,8 +622,6 @@ function enemiesCheck() {
     console.log("Ended dead check loop.");
     // Any surviving enemies attack.
     if (enemyOne.health > 0) {
-        console.log("Enemy One attack.");
-        console.log(enemyOne.strength);
         player.health = player.health - enemyOne.strength
         updateConsole("Hit by an enemy.");
     }
