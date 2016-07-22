@@ -3,7 +3,8 @@ window.onload = function () {
 };
 
 send_command = function(){
-var comm = document.getElementByID("comm");
-var game = document.getElementByID("game");
-console.log(comm.value);
-}
+    var comm = document.getElementById("comm");
+    var game = document.getElementById("game");
+    console.log(comm.value);
+    game.value = comm.value;
+};
