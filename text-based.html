@@ -29,6 +29,8 @@
 <body>
 <textarea id="game"></textarea>
 <textarea id="comm"></textarea>
-<button id="go" onclick="send_command()">Go</button>
+<form action="javascript:send_command()">
+    <input type="submit" id="go" name="go" value="Submit">
+</form>
 </body>
 </html>
